@@ -8,10 +8,13 @@ export default {
     extend: {
       colors: {
         "dark-green": {
-          500: '#20211D',
+          0: '#20211D',
         },
         "light-green": {
           0: "#38382F"
+        },
+        "light-tan": {
+          0: "#B5BAA4"
         }
       },
     },
