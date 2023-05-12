@@ -3,7 +3,7 @@ import NavLogo from "./NavLogo.jsx";
 
 function Nav() {
   return (
-    <nav className="container bg-light-green-0 mx-auto mt-5 rounded-3xl px-7 py-2.5">
+    <nav className="bg-light-green-0 rounded-3xl px-7 py-2.5">
       <div className="flex justify-between">
         <NavLogo />
 
