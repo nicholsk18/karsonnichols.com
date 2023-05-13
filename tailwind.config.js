@@ -15,6 +15,9 @@ export default {
         },
         "light-tan": {
           0: "#B5BAA4"
+        },
+        "lime-green": {
+          0: "#626E40"
         }
       },
     },
