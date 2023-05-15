@@ -1,31 +1,29 @@
 import Nav from './components/Nav.jsx'
 import './App.css'
-import { Outlet, useLocation } from "react-router-dom";
+import Portfolio from './pages/Portfolio.jsx';
+import Home from './pages/Home.jsx';
+import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion"
-import {useEffect, useState} from "react";
+import Layout from './components/Layout.jsx';
 
-const animations = {
-  initial: { opacity: 0, x: 700 },
-  animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -100 },
-}
 function App() {
+  const location = useLocation();
 
   return (
     <>
       <div className="container mx-auto h-screen pt-5 overflow-hidden">
         <Nav />
 
-        <motion.div
-          initial='initial'
-          animate='animate'
-          exit='exit'
-          variants={animations}
-          className="flex flex-col items-center justify-center h-full text-light-tan-0"
-          transition={{ duration: 5 }}
-        >
-          <Outlet />
-        </motion.div>
+        <div className="flex flex-row items-center justify-center min-h-full text-light-tan-0 overflow-hidden">
+          <AnimatePresence>
+              <Routes key={location.pathname} location={location}>
+                  <Route path='/' element={<Layout />}>
+                      <Route path='/portfolio' element={<Portfolio />} />
+                      <Route path='/' element={<Home />} />
+                  </Route>
+              </Routes>
+          </AnimatePresence>
+        </div>
       </div>
     </>
   )
