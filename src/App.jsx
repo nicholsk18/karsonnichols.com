@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-      <div className="container mx-auto h-screen pt-5 overflow-hidden">
+      <div className="w-11/12 md:container mx-auto h-screen pt-5 overflow-hidden">
         <Nav />
 
         <div className="flex flex-row items-center justify-center min-h-full text-light-tan-0 overflow-hidden">

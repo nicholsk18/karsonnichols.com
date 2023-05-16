@@ -14,7 +14,7 @@ function Layout () {
             animate='animate'
             exit='exit'
             variants={animations}
-            className="absolute top-20 h-full"
+            className="absolute"
             transition={{ duration: 1 }}
         >
             <Outlet />
