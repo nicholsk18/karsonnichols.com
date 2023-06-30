@@ -16,7 +16,7 @@ import {Link} from "react-router-dom";
 function About () {
   return (
     <div className="w-11/12 md:container mx-auto">
-      <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4 -mt-40">
+      <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4 mt-80 mb-20 md:-mt-10">
         <div className="border-b-8 border-r-0 md:border-b-0 md:border-r-8 mb-5 pr-0 md:pb-0 md:pr-5 border-light-green-0 py-20">
           <h2 className="text-4xl font-bold pb-5">Who Am I</h2>
           <p className="pb-10">
