@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 
 function Home () {
     return (
@@ -10,7 +11,9 @@ function Home () {
             PHP Full Stack <br /> Developer
           </p>
 
-          <a href="https://www.upwork.com/workwith/karsonn" className="border-2 px-10 py-3 w-11/12 md:w-1/3 text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0">Hire Me!</a>
+          <Link to="https://www.upwork.com/workwith/karsonn" className="border-2 px-10 py-3 w-11/12 md:w-1/3 text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0">
+            Hire Me!
+          </Link>
         </div>
     )
 }

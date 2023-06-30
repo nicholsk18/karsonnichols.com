@@ -5,6 +5,8 @@ import Home from './pages/Home.jsx';
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion"
 import Layout from './components/Layout.jsx';
+import About from "./pages/About.jsx";
+import Contact from "./pages/Contact.jsx";
 
 function App() {
   const location = useLocation();
@@ -19,6 +21,8 @@ function App() {
               <Routes key={location.pathname} location={location}>
                   <Route path='/' element={<Layout />}>
                       <Route path='/portfolio' element={<Portfolio />} />
+                      <Route path='/about' element={<About />} />
+                      <Route path='/Contact' element={<Contact />} />
                       <Route path='/' element={<Home />} />
                   </Route>
               </Routes>

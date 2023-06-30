@@ -5,7 +5,7 @@ import { motion } from "framer-motion"
 const animations = {
   initial: { opacity: 0, x: 200 },
   animate: { opacity: 1, x: 0 },
-  exit: { opacity: 0, x: -200 },
+  exit: { opacity: 0, x: 0 },
 }
 function Layout () {
     return (

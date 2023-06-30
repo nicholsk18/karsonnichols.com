@@ -9,8 +9,8 @@ function Nav() {
 
           <div className="flex justify-between">
             <NavItem name='Portfolio' link='/portfolio' />
-            <NavItem name='About' link='' />
-            <NavItem name='Contact' link='' />
+            <NavItem name='About' link='/about' />
+            <NavItem name='Contact' link='/contact' />
           </div>
         </div>
       </nav>
