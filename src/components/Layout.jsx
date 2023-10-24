@@ -1,24 +1,24 @@
-
-import { Outlet } from "react-router-dom";
-import { motion } from "framer-motion"
+import { Outlet } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const animations = {
   initial: { opacity: 0, x: 200 },
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: 0 },
 }
-function Layout () {
-    return (
-        <motion.div
-            initial='initial'
-            animate='animate'
-            exit='exit'
-            variants={animations}
-            className="absolute"
-            transition={{ duration: 1 }}
-        >
-            <Outlet />
-        </motion.div>
-    )
+
+function Layout() {
+  return (
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={animations}
+      className="absolute"
+      transition={{ duration: 1 }}
+    >
+      <Outlet />
+    </motion.div>
+  )
 }
 export default Layout
