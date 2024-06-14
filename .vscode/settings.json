@@ -1,0 +1,28 @@
+{
+  "files.exclude": {
+    "**/._*": true,
+    "node_modules": false
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.configPath": ".prettierrc",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.alwaysShowStatus": true,
+  "eslint.validate": ["vue", "javascript", "javascriptreact", "html"],
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "html.format.wrapAttributes": "auto",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}
