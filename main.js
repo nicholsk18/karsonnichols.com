@@ -1,3 +1,3 @@
-document.querySelector("#app").innerHTML = ``;
+// document.querySelector("#app").innerHTML = ``;
 
 // setupCounter(document.querySelector('#counter'))
