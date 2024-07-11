@@ -9,3 +9,17 @@ html {
 .section {
   scroll-margin-top: 5rem;
 }
+
+.project-section {
+  opacity: 0;
+  transform: translate(0, -100px);
+  transition: transform 1s, opacity 1s, box-shadow 0.5s;
+}
+.project-section:hover {
+  box-shadow: rgba(255, 255, 255, 0.56) 0px 0px 40px 0px;
+}
+
+.animate {
+  opacity: 1;
+  transform: translate(0, 0);
+}
