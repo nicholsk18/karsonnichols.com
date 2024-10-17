@@ -1,427 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  />
+  <title>KN | Full Stack Developer | Karson Nichols</title>
+  <meta
+    name="description"
+    content="Freelance software developer available to help with your next php project"
+  />
+  <meta
+    name="keywords"
+    content="freelance, developer, upwork, software developer, freelance developer, php developer, react developer"
+  />
+  
+  <link href="./main.css" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
+  
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-ZQ12PJVEQ9"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    
+    gtag("js", new Date());
+    
+    gtag("config", "G-ZQ12PJVEQ9");
+  </script>
+</head>
+<body class="bg-dark-green-0">
+<div class="bg-dark-green-0 fixed w-full h-24 overflow-hidden z-10"></div>
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-    />
-    <title>KN | Full Stack Developer | Karson Nichols</title>
-    <meta
-      name="description"
-      content="Freelance software developer available to help with your next php project"
-    />
-    <meta
-      name="keywords"
-      content="freelance, developer, upwork, software developer, freelance developer, php developer, react developer"
-    />
-
-    <link href="./main.css" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
-
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-ZQ12PJVEQ9"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-ZQ12PJVEQ9");
-    </script>
-  </head>
-  <body class="bg-dark-green-0">
-    <div class="bg-dark-green-0 fixed w-full h-24 overflow-hidden z-10"></div>
-
-    <section class="w-full h-full">
-      <div class="w-11/12 pt-5 mx-auto h-screen relative">
-        <nav
-          class="bg-light-green-0 rounded-3xl px-7 py-2.5 fixed w-11/12 z-20"
-        >
-          <div class="flex justify-between">
-            <div class="">
-              <a href="/">
-                <img src="./assets/logo.svg" alt="logo" class="w-10 px-2" />
-              </a>
-            </div>
-
-            <div class="flex justify-between">
-              <a
-                href="/#projects"
-                class="px-5 m-auto text-lg text-light-tan-0 hover:text-gray-400"
-                >Projects</a
-              >
-              <a
-                href="/#about"
-                class="px-5 m-auto text-lg text-light-tan-0 hover:text-gray-400"
-                >About</a
-              >
-              <a
-                href="/#contact"
-                class="px-5 m-auto text-lg text-light-tan-0 hover:text-gray-400"
-                >Contact</a
-              >
-            </div>
-          </div>
-        </nav>
-
-        <div
-          class="flex flex-row items-center justify-center min-h-full text-light-tan-0 overflow-hidden"
-        >
-          <div class="flex flex-col items-center justify-center h-full">
-            <h1 class="text-6xl md:text-8xl font-extrabold uppercase">
-              Karson N.
-            </h1>
-
-            <hr class="h-4 bg-light-green-0 border-0 my-3 w-11/12 md:w-1/3" />
-
-            <p
-              class="text-4xl md:text-5xl font-extrabold uppercase text-center"
-            >
-              PHP Full Stack <br />
-              Developer
-            </p>
-
-            <div class="flex flex-wrap w-full">
-              <a
-                href="https://www.upwork.com/freelancers/karsonn"
-                class="flex-1 mr-5 border-2 px-10 py-3 w-min-full text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
-              >
-                Hire on Upwork!
-              </a>
-              <a
-                href="https://contra.com/kenichols2_trltt2e5?utm_campaign=social_sharing&utm_medium=independent_share&utm_source=copy_link"
-                class="flex-1 border-2 px-10 py-3 w-min-full text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
-              >
-                Hire on Contra!
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      id="projects"
-      class="w-11/12 md:container mx-auto min-h-screen pt-5 section"
+<section class="w-full h-full">
+  <div class="w-11/12 pt-5 mx-auto h-screen relative">
+    <nav
+      class="bg-light-green-0 rounded-3xl px-7 py-2.5 fixed w-11/12 z-20"
     >
-      <h2 class="font-bold text-light-tan-0 text-6xl text-center pb-10">
-        Projects
-      </h2>
-
-      <div class="project-section flex flex-col md:flex-row gap-10">
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <a href="https://www.designsnprint.com/editor/?design_id=4529">
-            <img src="./assets/designnprint.png" alt="design tool" />
+      <div class="flex justify-between">
+        <div class="">
+          <a href="/">
+            <img src="./assets/logo.svg" alt="logo" class="w-10 px-2" />
           </a>
         </div>
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <h3 class="text-light-tan-0 text-4xl">
-            Design Tool -
-            <a href="https://www.designsnprint.com/editor/?design_id=4529"
-              >designsnprint.com</a
-            >
-          </h3>
-          <p class="text-light-tan-0 pt-5 text-2xl">
-            Create a new design tool that enables customers to craft their own
-            designs, attracting those who prefer customization over prebuilt
-            options. The project leverages modern technologies, utilizing React
-            and TypeScript for the frontend and Laravel for the backend, and is
-            based on client-provided designs.
-          </p>
-        </div>
-      </div>
-
-      <div class="flex gap-10 mt-10">
-        <hr
-          class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
-        />
-      </div>
-
-      <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <a href="https://isogent.com/">
-            <img src="./assets/isogent.png" alt="isogent" />
-          </a>
-        </div>
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <h3 class="text-light-tan-0 text-4xl">
-            <a href="https://isogent.com/">isogent.com</a>
-          </h3>
-          <p class="text-light-tan-0 pt-5 text-2xl">
-            Using the provided designs, we developed a static website for a new
-            business. This mobile-responsive site adheres to modern HTML, CSS,
-            and JavaScript standards, ensuring fast load times. It also features
-            a pricing calculator, allowing potential customers to easily see how
-            much they can save with isogent.
-          </p>
-        </div>
-      </div>
-
-      <div class="flex gap-10 mt-10">
-        <hr
-          class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
-        />
-      </div>
-
-      <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <a href="https://flooringos.com/">
-            <img src="./assets/flooringos.png" alt="flooringos" />
-          </a>
-        </div>
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <h3 class="text-light-tan-0 text-4xl">
-            <a href="https://flooringos.com/">flooringos.com</a>
-          </h3>
-          <p class="text-light-tan-0 pt-5 text-2xl">
-            Using the provided designs, we developed a static website for a new
-            business. This mobile-responsive site adheres to modern HTML, CSS,
-            and JavaScript standards, ensuring fast load times. It also features
-            a pricing calculator, allowing potential customers to easily see how
-            much they can save with FlooringOS.
-          </p>
-        </div>
-      </div>
-
-      <div class="flex gap-10 mt-10">
-        <hr
-          class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
-        />
-      </div>
-
-      <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <a href="https://www.floorminds.com/">
-            <img src="./assets/floorminds.png" alt="floorminds" />
-          </a>
-        </div>
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <h3 class="text-light-tan-0 text-4xl">
-            <a href="https://www.floorminds.com/">floorminds.com</a>
-          </h3>
-          <p class="text-light-tan-0 pt-5 text-2xl">
-            Helped FloorMinds develop a new website based on the provided
-            designs. We adopted a mobile-first approach to ensure responsiveness
-            across all devices. By leveraging modern HTML and CSS techniques, we
-            achieved ultra-fast delivery and optimized performance. The project
-            included thorough testing for compatibility and speed, ensuring a
-            seamless user experience. Additionally, we incorporated best
-            practices for SEO and accessibility to maximize reach and usability.
-          </p>
-        </div>
-      </div>
-
-      <div class="flex gap-10 mt-10">
-        <hr
-          class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
-        />
-      </div>
-
-      <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <a href="https://teamworkconstructionllc.com/">
-            <img
-              src="./assets/teamworkconstructionllc.png"
-              alt="team work construction"
-            />
-          </a>
-        </div>
-        <div
-          class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
-        >
-          <h3 class="text-light-tan-0 text-4xl">
-            <a
-              href="https://teamworkconstructionllc.com/"
-              class="text-lg md:text-4xl"
-              >teamworkconstructionllc.com</a
-            >
-          </h3>
-          <p class="text-light-tan-0 pt-5 text-2xl">
-            Helped Teamwork Construction in reaching its online audience by
-            creating a new website. The project began with a comprehensive
-            analysis of their target audience and business goals to inform the
-            design and functionality of the site. Utilizing a mobile-first
-            approach, we ensured the site is fully responsive and accessible on
-            all devices.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="w-11/12 md:container mx-auto py-5 section my-10">
-      <h2 class="font-bold text-light-tan-0 text-6xl text-center pb-10">
-        About Me
-      </h2>
-
-      <div class="w-11/12 md:container mx-auto text-light-tan-0">
-        <div class="grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4">
-          <div
-            class="border-b-8 border-r-0 md:border-b-0 md:border-r-8 mb-5 pr-0 md:pb-0 md:pr-5 border-light-green-0 pt-10 pb-20 text-center md:text-left"
+        
+        <div class="flex justify-between">
+          <a
+            href="/#projects"
+            class="px-5 m-auto text-lg text-light-tan-0 hover:text-gray-400"
+          >Projects</a
           >
-            <h3 class="text-4xl font-bold pb-5">Who Am I</h3>
-            <p class="pb-10">
-              Hey, I am Karson. I am a software developer based out of Alabama.
-              I have been building web apps for over 5 years and have used a
-              variety of tools. Starting freelancing on upwork really opened up
-              my horizon of different tools and set ups. I really fell in love
-              with solving complex challenges, and helping my clients get their
-              apps back to working order. If you want to add a feature to your
-              app, or just need that pesky bug squashed, send me a message and I
-              would be more then happy to help you
-            </p>
-
-            <a
-              href="https://www.upwork.com/freelancers/karsonn"
-              class="mr-5 border-2 px-10 py-3 w-11/12 md:w-1/3 text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
-            >
-              Hire on Upwork!
-            </a>
-            <a
-              href="https://contra.com/kenichols2_trltt2e5?utm_campaign=social_sharing&utm_medium=independent_share&utm_source=copy_link"
-              class="border-2 px-10 py-3 w-11/12 md:w-1/3 text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
-            >
-              Hire on Contra!
-            </a>
-          </div>
-          <div class="flex flex-row justify-between flex-wrap">
-            <div class="w-20 pt-10">
-              <img
-                src="/assets/icons/bootstrap-4-icon.svg"
-                alt="Bootstrap Icon"
-              />
-            </div>
-            <div class="w-20 pt-40 flex items-end">
-              <img src="/assets/icons/css-icon.svg" alt="CSS Icon" />
-            </div>
-            <div class="w-20 pt-10">
-              <img src="/assets/icons/html-icon.svg" alt="HTML Icon" />
-            </div>
-            <div class="w-20 pt-40 flex items-end">
-              <img
-                src="/assets/icons/javascript-programming-language-icon.svg"
-                alt="JavaScript Icon"
-              />
-            </div>
-            <div class="w-20 pt-10">
-              <img src="/assets/icons/laravel-icon.svg" alt="Laravel Icon" />
-            </div>
-            <div class="w-20 pt-40 flex items-end">
-              <img src="/assets/icons/mariadb-icon.svg" alt="Maria DB Icon" />
-            </div>
-            <div class="w-20 pt-10">
-              <img
-                src="/assets/icons/php-programming-language-icon.svg"
-                alt="php Icon"
-              />
-            </div>
-            <div class="w-20 pb-10 flex items-end">
-              <img src="/assets/icons/react-js-icon.svg" alt="React Icon" />
-            </div>
-            <div class="w-20 pt-10">
-              <img src="/assets/icons/shopify-icon.svg" alt="Shopify Icon" />
-            </div>
-            <div class="w-20 pt-10">
-              <img
-                src="/assets/icons/tailwind-css-icon.svg"
-                alt="Tailwind Icon"
-              />
-            </div>
-            <div class="w-20 pt-10">
-              <img
-                src="/assets/icons/wordpress-icon.svg"
-                alt="WordPress Icon"
-              />
-            </div>
-          </div>
+          <a
+            href="/#about"
+            class="px-5 m-auto text-lg text-light-tan-0 hover:text-gray-400"
+          >About</a
+          >
+          <a
+            href="/#contact"
+            class="px-5 m-auto text-lg text-light-tan-0 hover:text-gray-400"
+          >Contact</a
+          >
         </div>
       </div>
-    </section>
-
-    <section
-      id="contact"
-      class="w-11/12 md:container mx-auto pt-5 section mt-10"
+    </nav>
+    
+    <div
+      class="flex flex-row items-center justify-center min-h-full text-light-tan-0 overflow-hidden"
     >
-      <h2 class="font-bold text-light-tan-0 text-6xl text-center pb-10">
-        Contact
-      </h2>
-
-      <div class="w-11/12 mx-auto max-w-full">
-        <form
-          class="max-w-md mx-auto"
-          action="https://formsubmit.co/5cecc63476a70ba27e28452aa6f3f9f9"
-          method="POST"
+      <div class="flex flex-col items-center justify-center h-full">
+        <h1 class="text-6xl md:text-8xl font-extrabold uppercase">
+          Karson N.
+        </h1>
+        
+        <hr class="h-4 bg-light-green-0 border-0 my-3 w-11/12 md:w-1/3" />
+        
+        <p
+          class="text-4xl md:text-5xl font-extrabold uppercase text-center"
         >
-          <div class="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              name="name"
-              id="name"
-              class="block py-2.5 px-0 w-full text-sm text-light-tan-0 bg-transparent border-0 border-b-2 border-light-tan-0 appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
-              placeholder=" "
-              required
-            />
-            <label
-              for="name"
-              class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Name</label
-            >
-          </div>
-          <div class="relative z-0 w-full mb-5 group">
-            <input
-              type="email"
-              name="email"
-              id="email"
-              class="block py-2.5 px-0 w-full text-sm text-light-tan-0 bg-transparent border-0 border-b-2 border-light-tan-0 appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
-              placeholder=" "
-              required
-            />
-            <label
-              for="email"
-              class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Email</label
-            >
-          </div>
-          <div class="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              name="subject"
-              id="subject"
-              class="block py-2.5 px-0 w-full text-sm text-light-tan-0 bg-transparent border-0 border-b-2 border-light-tan-0 appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
-              placeholder=" "
-              required
-            />
-            <label
-              for="subject"
-              class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Subject</label
-            >
-          </div>
-          <div class="relative z-0 w-full mb-5 group">
+          PHP Full Stack <br />
+          Developer
+        </p>
+        
+        <div class="flex flex-wrap w-full">
+          <a
+            href="https://www.upwork.com/freelancers/karsonn"
+            class="flex-1 mr-5 border-2 px-10 py-3 w-min-full text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
+          >
+            Hire on Upwork!
+          </a>
+          <a
+            href="https://contra.com/kenichols2_trltt2e5?utm_campaign=social_sharing&utm_medium=independent_share&utm_source=copy_link"
+            class="flex-1 border-2 px-10 py-3 w-min-full text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
+          >
+            Hire on Contra!
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  id="projects"
+  class="w-11/12 md:container mx-auto min-h-screen pt-5 section"
+>
+  <h2 class="font-bold text-light-tan-0 text-6xl text-center pb-10">
+    Projects
+  </h2>
+  
+  <div class="project-section flex flex-col md:flex-row gap-10">
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <a href="https://www.designsnprint.com/editor/?design_id=4529">
+        <img src="./assets/designnprint.png" alt="design tool" />
+      </a>
+    </div>
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <h3 class="text-light-tan-0 text-4xl">
+        Design Tool -
+        <a href="https://www.designsnprint.com/editor/?design_id=4529"
+        >designsnprint.com</a
+        >
+      </h3>
+      <p class="text-light-tan-0 pt-5 text-2xl">
+        Create a new design tool that enables customers to craft their own
+        designs, attracting those who prefer customization over prebuilt
+        options. The project leverages modern technologies, utilizing React
+        and TypeScript for the frontend and Laravel for the backend, and is
+        based on client-provided designs.
+      </p>
+    </div>
+  </div>
+  
+  <div class="flex gap-10 mt-10">
+    <hr
+      class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
+    />
+  </div>
+  
+  <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <a href="https://isogent.com/">
+        <img src="./assets/isogent.png" alt="isogent" />
+      </a>
+    </div>
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <h3 class="text-light-tan-0 text-4xl">
+        <a href="https://isogent.com/">isogent.com</a>
+      </h3>
+      <p class="text-light-tan-0 pt-5 text-2xl">
+        Using the provided designs, we developed a static website for a new
+        business. This mobile-responsive site adheres to modern HTML, CSS,
+        and JavaScript standards, ensuring fast load times. It also features
+        a pricing calculator, allowing potential customers to easily see how
+        much they can save with isogent.
+      </p>
+    </div>
+  </div>
+  
+  <div class="flex gap-10 mt-10">
+    <hr
+      class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
+    />
+  </div>
+  
+  <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <a href="https://flooringos.com/">
+        <img src="./assets/flooringos.png" alt="flooringos" />
+      </a>
+    </div>
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <h3 class="text-light-tan-0 text-4xl">
+        <a href="https://flooringos.com/">flooringos.com</a>
+      </h3>
+      <p class="text-light-tan-0 pt-5 text-2xl">
+        Using the provided designs, we developed a static website for a new
+        business. This mobile-responsive site adheres to modern HTML, CSS,
+        and JavaScript standards, ensuring fast load times. It also features
+        a pricing calculator, allowing potential customers to easily see how
+        much they can save with FlooringOS.
+      </p>
+    </div>
+  </div>
+  
+  <div class="flex gap-10 mt-10">
+    <hr
+      class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
+    />
+  </div>
+  
+  <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <a href="https://www.floorminds.com/">
+        <img src="./assets/floorminds.png" alt="floorminds" />
+      </a>
+    </div>
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <h3 class="text-light-tan-0 text-4xl">
+        <a href="https://www.floorminds.com/">floorminds.com</a>
+      </h3>
+      <p class="text-light-tan-0 pt-5 text-2xl">
+        Helped FloorMinds develop a new website based on the provided
+        designs. We adopted a mobile-first approach to ensure responsiveness
+        across all devices. By leveraging modern HTML and CSS techniques, we
+        achieved ultra-fast delivery and optimized performance. The project
+        included thorough testing for compatibility and speed, ensuring a
+        seamless user experience. Additionally, we incorporated best
+        practices for SEO and accessibility to maximize reach and usability.
+      </p>
+    </div>
+  </div>
+  
+  <div class="flex gap-10 mt-10">
+    <hr
+      class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
+    />
+  </div>
+  
+  <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <a href="https://teamworkconstructionllc.com/">
+        <img
+          src="./assets/teamworkconstructionllc.png"
+          alt="team work construction"
+        />
+      </a>
+    </div>
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <h3 class="text-light-tan-0 text-4xl">
+        <a
+          href="https://teamworkconstructionllc.com/"
+          class="text-lg md:text-4xl"
+        >teamworkconstructionllc.com</a
+        >
+      </h3>
+      <p class="text-light-tan-0 pt-5 text-2xl">
+        Helped Teamwork Construction in reaching its online audience by
+        creating a new website. The project began with a comprehensive
+        analysis of their target audience and business goals to inform the
+        design and functionality of the site. Utilizing a mobile-first
+        approach, we ensured the site is fully responsive and accessible on
+        all devices.
+      </p>
+    </div>
+  </div>
+  
+  <div class="flex gap-10 mt-10">
+    <hr
+      class="h-4 bg-light-green-0 border-0 my-3 mx-auto w-11/12 md:w-1/3"
+    />
+  </div>
+  
+  <div class="project-section flex flex-col md:flex-row gap-10 mt-10">
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <a href="https://www.watchsheet.com/">
+        <img
+          src="./assets/watchsheet.png"
+          alt="team work construction"
+        />
+      </a>
+    </div>
+    <div
+      class="flex-1 text-center md:text-left w-full md:w-w-4/5 flex flex-col justify-center"
+    >
+      <h3 class="text-light-tan-0 text-4xl">
+        <a
+          href="https://www.watchsheet.com/"
+          class="text-lg md:text-4xl"
+        >watchsheet.com</a
+        >
+      </h3>
+      <p class="text-light-tan-0 pt-5 text-2xl">
+        For this project, I developed a fully responsive website using only HTML and CSS. The goal was to create a
+        seamless user experience across all devices, from desktops to mobile phones. The design is clean, modern, and
+        optimized for fast loading times. Key features include flexible grid layouts, media queries for device-specific
+        styling, and optimized images for performance. By using only HTML and CSS, the site maintains simplicity while
+        ensuring adaptability and ease of maintenance. This project highlights my ability to create visually appealing
+        and functional websites with minimal resources.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="w-11/12 md:container mx-auto py-5 section my-10">
+  <h2 class="font-bold text-light-tan-0 text-6xl text-center pb-10">
+    About Me
+  </h2>
+  
+  <div class="w-11/12 md:container mx-auto text-light-tan-0">
+    <div class="grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4">
+      <div
+        class="border-b-8 border-r-0 md:border-b-0 md:border-r-8 mb-5 pr-0 md:pb-0 md:pr-5 border-light-green-0 pt-10 pb-20 text-center md:text-left"
+      >
+        <h3 class="text-4xl font-bold pb-5">Who Am I</h3>
+        <p class="pb-10">
+          Hey, I am Karson. I am a software developer based out of Alabama.
+          I have been building web apps for over 5 years and have used a
+          variety of tools. Starting freelancing on upwork really opened up
+          my horizon of different tools and set-ups. I really fell in love
+          with solving complex challenges, and helping my clients get their
+          apps back to working order. If you want to add a feature to your
+          app, or just need that pesky bug squashed, send me a message and I
+          would be more than happy to help you
+        </p>
+        
+        <a
+          href="https://www.upwork.com/freelancers/karsonn"
+          class="mr-5 border-2 px-10 py-3 w-11/12 md:w-1/3 text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
+        >
+          Hire on Upwork!
+        </a>
+        <a
+          href="https://contra.com/kenichols2_trltt2e5?utm_campaign=social_sharing&utm_medium=independent_share&utm_source=copy_link"
+          class="border-2 px-10 py-3 w-11/12 md:w-1/3 text-center mt-10 bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
+        >
+          Hire on Contra!
+        </a>
+      </div>
+      <div class="flex flex-row justify-between flex-wrap">
+        <div class="w-20 pt-10">
+          <img
+            src="/assets/icons/bootstrap-4-icon.svg"
+            alt="Bootstrap Icon"
+          />
+        </div>
+        <div class="w-20 pt-40 flex items-end">
+          <img src="/assets/icons/css-icon.svg" alt="CSS Icon" />
+        </div>
+        <div class="w-20 pt-10">
+          <img src="/assets/icons/html-icon.svg" alt="HTML Icon" />
+        </div>
+        <div class="w-20 pt-40 flex items-end">
+          <img
+            src="/assets/icons/javascript-programming-language-icon.svg"
+            alt="JavaScript Icon"
+          />
+        </div>
+        <div class="w-20 pt-10">
+          <img src="/assets/icons/laravel-icon.svg" alt="Laravel Icon" />
+        </div>
+        <div class="w-20 pt-40 flex items-end">
+          <img src="/assets/icons/mariadb-icon.svg" alt="Maria DB Icon" />
+        </div>
+        <div class="w-20 pt-10">
+          <img
+            src="/assets/icons/php-programming-language-icon.svg"
+            alt="php Icon"
+          />
+        </div>
+        <div class="w-20 pb-10 flex items-end">
+          <img src="/assets/icons/react-js-icon.svg" alt="React Icon" />
+        </div>
+        <div class="w-20 pt-10">
+          <img src="/assets/icons/shopify-icon.svg" alt="Shopify Icon" />
+        </div>
+        <div class="w-20 pt-10">
+          <img
+            src="/assets/icons/tailwind-css-icon.svg"
+            alt="Tailwind Icon"
+          />
+        </div>
+        <div class="w-20 pt-10">
+          <img
+            src="/assets/icons/wordpress-icon.svg"
+            alt="WordPress Icon"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  id="contact"
+  class="w-11/12 md:container mx-auto pt-5 section mt-10"
+>
+  <h2 class="font-bold text-light-tan-0 text-6xl text-center pb-10">
+    Contact
+  </h2>
+  
+  <div class="w-11/12 mx-auto max-w-full">
+    <form
+      class="max-w-md mx-auto"
+      action="https://formsubmit.co/5cecc63476a70ba27e28452aa6f3f9f9"
+      method="POST"
+    >
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="block py-2.5 px-0 w-full text-sm text-light-tan-0 bg-transparent border-0 border-b-2 border-light-tan-0 appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="name"
+          class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Name</label
+        >
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="block py-2.5 px-0 w-full text-sm text-light-tan-0 bg-transparent border-0 border-b-2 border-light-tan-0 appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="email"
+          class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Email</label
+        >
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          type="text"
+          name="subject"
+          id="subject"
+          class="block py-2.5 px-0 w-full text-sm text-light-tan-0 bg-transparent border-0 border-b-2 border-light-tan-0 appearance-none focus:outline-none focus:ring-0 focus:border-white peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="subject"
+          class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Subject</label
+        >
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
             <textarea
               name="message"
               id="message"
@@ -430,46 +470,46 @@
               required
               style="height: 150px"
             ></textarea>
-            <label
-              for="subject"
-              class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >Message</label
-            >
-          </div>
-
-          <div class="block text-white">
-            <button
-              type="submit"
-              class="border-2 px-10 py-3 w-full text-center bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
-            >
-              Send
-            </button>
-          </div>
-        </form>
+        <label
+          for="subject"
+          class="peer-focus:font-medium absolute text-sm text-light-tan-0 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Message</label
+        >
       </div>
-    </section>
-
-    <footer class="w-full my-10">
-      <div class="w-11/12 md:container mx-auto py-5 relative">
-        <div class="flex gap-5 justify-center">
-          <a href="https://github.com/nicholsk18">
-            <img
-              src="/assets/icons/github-mark-white.svg"
-              class="w-10"
-              alt="GitHub"
-            />
-          </a>
-          <a href="https://www.linkedin.com/in/karson-nichols/">
-            <img
-              src="/assets/icons/LI-In-Bug.png"
-              class="w-10"
-              alt="LinkedIn"
-            />
-          </a>
-        </div>
+      
+      <div class="block text-white">
+        <button
+          type="submit"
+          class="border-2 px-10 py-3 w-full text-center bg-lime-green-0 border-lime-green-0 hover:bg-light-green-0"
+        >
+          Send
+        </button>
       </div>
-    </footer>
+    </form>
+  </div>
+</section>
 
-    <script type="module" src="/main.js"></script>
-  </body>
+<footer class="w-full my-10">
+  <div class="w-11/12 md:container mx-auto py-5 relative">
+    <div class="flex gap-5 justify-center">
+      <a href="https://github.com/nicholsk18">
+        <img
+          src="/assets/icons/github-mark-white.svg"
+          class="w-10"
+          alt="GitHub"
+        />
+      </a>
+      <a href="https://www.linkedin.com/in/karson-nichols/">
+        <img
+          src="/assets/icons/LI-In-Bug.png"
+          class="w-10"
+          alt="LinkedIn"
+        />
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="/main.js"></script>
+</body>
 </html>
