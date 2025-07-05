@@ -1,0 +1,151 @@
+---
+import { Image } from "astro:assets";
+
+import ReactIcon from "@/assets/react.svg";
+import LaravelIcon from "@/assets/laravel.svg";
+import MariadbIcon from "@/assets/mariadb.svg";
+import ShopifyIcon from "@/assets/shopify.svg";
+import Line from "@/assets/line.png";
+
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import HeroImage from "@/components/HeroImage.astro";
+import Title from "@/components/ui/Title.astro";
+import CardProject from "@/components/ui/CardProject.astro";
+import Link from "@/components/ui/Link.astro";
+import Card from "@/components/ui/Card.astro";
+import Reviews from "@/components/Reviews.astro";
+
+const projects = Object.values(
+  import.meta.glob("@/pages/projects/*.mdx", { eager: true }),
+);
+---
+
+<Layout
+  title="Karson Nichols | Software Developer"
+  description="Need help bringing your idea to life or finishing your current project? I offer expert support to turn your vision into reality, efficiently and creatively."
+>
+  <HeroImage
+    title="Professional development at a reasonable cost"
+    description="Need help with your store or web app but don’t want to pay agency prices? Give me a call, I’m here to help your business grow at a reasonable cost."
+  />
+
+  <Container tag="section" classList="py-10 my-10">
+    <Title tag="h2" variant="h2">Featured Projects</Title>
+    <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10">
+      {
+        projects.map((project: any) => {
+          if (project.frontmatter.featured) {
+            return (
+              <CardProject
+                title={project.frontmatter.title}
+                link={project.frontmatter.link}
+                date={project.frontmatter.date}
+                image={project.frontmatter.image}
+                url={project.url}
+              />
+            );
+          }
+        })
+      }
+    </div>
+
+    <div class="text-center mt-14">
+      <Link to="/projects" variant="outline-blue" classList="py-3 mx-auto">
+        Explore more projects
+      </Link>
+    </div>
+  </Container>
+
+  <Container tag="section" classList="my-20">
+    <Title tag="h2" variant="h2">Services</Title>
+    <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-10">
+      <Card>
+        <div class="flex items-center gap-5 mb-4">
+          <Image src={ReactIcon} alt="React Icon" />
+          <Title tag="h3" variant="h3">Frontend</Title>
+        </div>
+
+        <p>
+          The front end of a website is crucial. It’s what users interact with
+          when they visit your store or app. A well-structured and visually
+          appealing website not only enhances user experience but also improves
+          your site’s ranking on Google. With clean, modern HTML and CSS, we
+          ensure your website is easy to navigate, responsive, and optimized for
+          search engines.
+        </p>
+      </Card>
+
+      <Card>
+        <div class="flex items-center gap-5 mb-4">
+          <Image src={LaravelIcon} alt="React Icon" />
+          <Title tag="h3" variant="h3">Backend</Title>
+        </div>
+
+        <p>
+          The backend of a website is the powerhouse that handles the logic,
+          data, and functionality that keep your store or app running smoothly.
+          A robust and efficient backend ensures seamless performance, enhances
+          security, and supports scalability. Using modern PHP, the Laravel
+          framework, and WordPress, we build reliable, high-performing systems
+          tailored to your needs. Whether it's a custom application or a
+          WordPress-powered site, we ensure your backend is easy to maintain and
+          optimized for growth.
+        </p>
+      </Card>
+
+      <Card>
+        <div class="flex items-center gap-5 mb-4">
+          <Image src={MariadbIcon} alt="React Icon" />
+          <Title tag="h3" variant="h3">Database</Title>
+        </div>
+
+        <p>
+          The database is the backbone of any website or application it stores,
+          organizes, and retrieves the data that powers your store or app. An
+          efficient and well-structured database ensures fast performance, data
+          integrity, and scalability. Using MariaDB, we design and optimize
+          databases that handle complex processes with ease, ensuring your data
+          is secure, accessible, and ready to support your growing business
+          needs.
+        </p>
+      </Card>
+
+      <Card>
+        <div class="flex items-center gap-5 mb-4">
+          <Image src={ShopifyIcon} alt="React Icon" />
+          <Title tag="h3" variant="h3">page builders</Title>
+        </div>
+
+        <p>
+          Page builders like Squarespace and Shopify are the foundation of
+          modern website creation, offering powerful tools to design, manage,
+          and scale your store or site with ease. With these platforms, we craft
+          visually stunning, responsive, and user-friendly websites that are
+          optimized for performance and SEO. Whether you're setting up a new
+          store or enhancing an existing site, we ensure a seamless experience
+          tailored to your business goals.
+        </p>
+      </Card>
+    </div>
+
+    <div class="text-center mt-14">
+      <Link to="/contact" variant="filled" classList="py-3 mx-auto">
+        Get a quote now
+      </Link>
+    </div>
+  </Container>
+
+  <section class="bg-blue-hero">
+    <Container classList="py-20">
+      <Title tag="h2" variant="h2">Reviews</Title>
+      <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+
+      <Reviews />
+    </Container>
+  </section>
+</Layout>

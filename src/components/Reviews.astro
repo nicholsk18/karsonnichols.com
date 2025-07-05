@@ -1,0 +1,111 @@
+---
+import QuoteIcon from "../assets/icons/quote.svg";
+import StarsIcon from "../assets/icons/stars.svg";
+import { Image } from "astro:assets";
+import reviews from "../data/reviews.json";
+---
+
+<div class="mt-10 md:mt-0">
+  <div class="w-[100px] md:w-full">
+    <Image src={QuoteIcon} alt="" />
+  </div>
+  <div class="relative bg-[#F2F2F290] w-full -top-10 md:-top-20 max-w-full md:max-w-[95%] ms-auto p-5 md:p-16">
+    <Image src={StarsIcon} alt="5 Stars" />
+    <div
+      x-data=`{
+    slides: ${JSON.stringify(reviews)},
+    currentSlideIndex: 1,
+    previous() {
+      if (this.currentSlideIndex > 1) {
+        this.currentSlideIndex = this.currentSlideIndex - 1
+      } else {
+        this.currentSlideIndex = this.slides.length
+      }
+    },
+    next() {
+      if (this.currentSlideIndex < this.slides.length) {
+        this.currentSlideIndex = this.currentSlideIndex + 1
+      } else {
+        this.currentSlideIndex = 1
+      }
+    }
+  }`
+      class="relative w-full overflow-hidden"
+    >
+      <!-- previous button -->
+      <button
+        type="button"
+        class="absolute bottom-0 right-14 z-20 flex rounded-full items-center justify-center bg-surface/40 text-on-surface transition hover:bg-surface/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:outline-offset-0 dark:bg-surface-dark/40 dark:text-on-surface-dark dark:hover:bg-surface-dark/60 dark:focus-visible:outline-primary-dark"
+        aria-label="previous slide"
+        x-on:click="previous()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          fill="none"
+          stroke-width="3"
+          class="size-5 md:size-10 pr-0.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+        </svg>
+      </button>
+
+      <!-- next button -->
+      <button
+        type="button"
+        class="absolute right-5 bottom-0 z-20 flex rounded-full items-center justify-center bg-surface/40 text-on-surface transition hover:bg-surface/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:outline-offset-0 dark:bg-surface-dark/40 dark:text-on-surface-dark dark:hover:bg-surface-dark/60 dark:focus-visible:outline-primary-dark"
+        aria-label="next slide"
+        x-on:click="next()"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          fill="none"
+          stroke-width="3"
+          class="size-5 md:size-10 pl-0.5"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+        </svg>
+      </button>
+
+      <!-- slides -->
+      <div class="relative h-[950px] md:h-[550px] lg:h-[350px] w-full mt-5">
+        <template x-for="(slide, index) in slides">
+          <div
+            x-cloak
+            x-show="currentSlideIndex == index + 1"
+            class="absolute inset-0"
+            x-transition.opacity.duration.750ms
+          >
+            <!-- name and review -->
+            <div class="z-10 flex flex-col gap-4 justify-between h-full">
+              <p
+                class="w-full text-pretty text-lg md:text-2xl !leading-9 text-on-surface-dark"
+                x-text="slide.review"
+                x-bind:id="'slide' + (index + 1) + 'Review'"
+              >
+              </p>
+              <h3
+                class="w-full text-balance text-2xl lg:text-3xl font-bold text-on-surface-dark-strong"
+                x-bind:aria-describedby="'slide' + (index + 1) + 'Review'"
+              >
+                <span x-text="slide.name"></span>
+                <span x-text="slide.company" class="block text-sm"></span>
+              </h3>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>
+</div>

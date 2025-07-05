@@ -1,0 +1,25 @@
+---
+import { cn } from "../../utils/helpers";
+const { to, variant, classList = "" } = Astro.props;
+
+const defaultClass = "block text-blue-base font-bold uppercase cursor-pointer w-fit";
+const outlineClass =
+  "border-2 border-orange-base px-10 rounded py-1 transition-all text-orange-base hover:text-white hover:bg-orange-base";
+const outlineBlueClass =
+  "border-2 border-blue-base px-10 rounded py-1 transition-all text-blue-base hover:text-white hover:bg-blue-base";
+const filledClass =
+  "border-2 border-orange-base px-10 rounded py-1 transition-all bg-orange-base text-white hover:bg-[#d13c04]";
+---
+
+<a
+  href={to}
+  class:list={cn([
+    defaultClass,
+    variant === "outline" && outlineClass,
+    variant === "outline-blue" && outlineBlueClass,
+    variant === "filled" && filledClass,
+    classList,
+  ])}
+>
+  <slot />
+</a>

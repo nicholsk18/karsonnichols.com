@@ -1,0 +1,23 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Container from "../../components/ui/Container.astro";
+import Title from "../../components/ui/Title.astro";
+
+// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
+// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+---
+
+<Layout
+  title="Karson Nichols Techinical Blog | Software Developer"
+  description="Software developer"
+>
+  <section class="bg-blue-hero">
+    <Container>
+      <div class="flex flex-row text-center py-14 gap-20">
+        <div class="flex-1 flex flex-col gap-8">
+          <Title tag="h1" variant="h1"> Blog </Title>
+        </div>
+      </div>
+    </Container>
+  </section>
+</Layout>
