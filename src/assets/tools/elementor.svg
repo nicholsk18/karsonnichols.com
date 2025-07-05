@@ -1,0 +1,16 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="75" height="75">
+	<title>Elementor Logo - Symbol Pink</title>
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="m0 0h400v400h-400z"/>
+		</clipPath>
+	</defs>
+	<style>
+		.s0 { fill: #ff7be5 } 
+	</style>
+	<g id="Clip-Path" clip-path="url(#cp1)">
+		<g>
+			<path class="s0" d="m200 0c-110.5 0-200 89.5-200 200 0 110.4 89.5 200 200 200 110.5 0 200-89.5 200-200 0-110.5-89.6-200-200-200zm-50 283.3h-33.3v-166.6h33.3zm133.3 0h-100v-33.4h100zm0-66.6h-100v-33.3h100zm0-66.7h-100v-33.3h100z"/>
+		</g>
+	</g>
+</svg>

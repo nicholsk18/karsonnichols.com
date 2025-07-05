@@ -1,0 +1,9 @@
+---
+import { cn } from "../../utils/helpers";
+const { tag = "div", classList = "" } = Astro.props;
+const TagName = tag;
+---
+
+<TagName class={cn("container mx-auto py-5 px-5 md:px-0", classList)}>
+  <slot />
+</TagName>

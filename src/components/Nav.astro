@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import Logo from "../assets/karson-logo.png";
+
+import Container from "./ui/Container.astro";
+import NavLink from "./ui/NavLink.astro";
+import Link from "./ui/Link.astro";
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="border-b-2 border-blue-base">
+  <Container>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-5">
+      <div>
+        <a href="/">
+          <Image src={Logo} alt="Karson Nichols Logo" loading="eager" />
+        </a>
+      </div>
+      <div
+        class="flex flex-row justify-between gap-x-10 gap-y-5 items-center flex-wrap"
+      >
+        <NavLink to="/projects" active={currentPath === "/projects"}
+          >Projects</NavLink
+        >
+        <NavLink to="/about" active={currentPath === "/about"}>About</NavLink>
+        <!--<NavLink to="/blog" active={currentPath === "/blog"}>Blog</NavLink>-->
+
+        <Link
+          to="/contact"
+          variant="outline"
+          classList="w-full md:w-fit text-center">Contact</Link
+        >
+      </div>
+    </div>
+  </Container>
+</nav>

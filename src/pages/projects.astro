@@ -1,0 +1,74 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import HeroImage from "@/components/HeroImage.astro";
+import Title from "@/components/ui/Title.astro";
+import CardProject from "@/components/ui/CardProject.astro";
+import Container from "@/components/ui/Container.astro";
+
+import { Image } from "astro:assets";
+import Line from "@/assets/line.png";
+import Reviews from "../components/Reviews.astro";
+
+const projectsList = Object.values(
+  import.meta.glob("@/pages/projects/*.mdx", { eager: true }),
+);
+const projects = projectsList.sort(
+  (a: any, b: any) =>
+    new Date(b.frontmatter.order) - new Date(a.frontmatter.order),
+);
+---
+
+<Layout
+  title="Karson Nichols | Software Developer"
+  description="Software developer"
+>
+  <HeroImage
+    title="Projects"
+    description="See for yourself how working with me can benifit your company, or get inspired for your next project."
+  />
+
+  <Container tag="section" classList="py-10 my-10">
+    <Title tag="h2" variant="h2">Completed Projects</Title>
+    <Image
+      src={Line}
+      alt="Line seporator"
+      class="text-center mx-auto pt-2"
+      loading="eager"
+    />
+
+    <div
+      class="grid
+      grid-cols-1
+      md:grid-cols-2
+      lg:grid-cols-3
+      gap-10
+      my-10"
+    >
+      {
+        projects.map((project: any) => (
+          <CardProject
+            title={project.frontmatter.title}
+            link={project.frontmatter.link}
+            date={project.frontmatter.date}
+            image={project.frontmatter.image}
+            url={project.url}
+          />
+        ))
+      }
+    </div>
+  </Container>
+
+  <section class="bg-blue-hero">
+    <Container classList="py-20">
+      <Title tag="h2" variant="h2">Reviews</Title>
+      <Image
+        src={Line}
+        alt="Line seporator"
+        class="text-center mx-auto pt-2"
+        loading="lazy"
+      />
+
+      <Reviews />
+    </Container>
+  </section>
+</Layout>

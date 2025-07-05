@@ -1,0 +1,34 @@
+---
+import { cn } from "../../utils/helpers";
+
+type Props = {
+  tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  variant: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  classList?: string;
+};
+type ClassOptions = {
+  h1: string;
+  h2: string;
+  h3: string;
+  h4: string;
+  h5: string;
+  h6: string;
+};
+
+const { tag, variant, classList = "" } = Astro.props;
+const classOptions: ClassOptions = {
+  h1: "text-4xl md:text-6xl text-blue-base font-bold uppercase",
+  h2: "text-2xl md:text-4xl text-blue-base font-bold uppercase text-center",
+  h3: "text-xl md:text-2xl text-blue-base font-bold uppercase",
+  h4: "text-lg md:text-xl text-blue-base font-bold uppercase",
+  h5: "text-md md:text-lg text-blue-base font-bold uppercase",
+  h6: "text-sm md:text-md text-blue-base font-bold uppercase",
+};
+
+const TagName = tag;
+const tagClasses = classOptions[variant];
+---
+
+<TagName class={cn(tagClasses, classList)}>
+  <slot />
+</TagName>

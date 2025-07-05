@@ -1,0 +1,23 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 189 258" width="55" height="75">
+	<title>css</title>
+	<style>
+		.s0 { fill: #264de4 } 
+		.s1 { fill: #2965f1 } 
+		.s2 { fill: #ebebeb } 
+		.s3 { fill: #000000 } 
+		.s4 { fill: #ffffff } 
+	</style>
+	<g id="layer1">
+		<g id="g3013">
+			<path id="polygon2989" fill-rule="evenodd" class="s0" d="m20 236.5l-16.5-185.1h181.4l-16.6 185.1-74.2 20.6z"/>
+			<path id="polygon2991" fill-rule="evenodd" class="s1" d="m154.2 224.7l14.1-158.2h-74.1v174.8z"/>
+			<path id="polygon2993" fill-rule="evenodd" class="s2" d="m41.3 135.2l2.1 22.7h50.8v-22.7z"/>
+			<path id="polygon2995" fill-rule="evenodd" class="s2" d="m39.3 111.9h54.9v-22.7h-0.1-56.9z"/>
+			<path id="polygon2997" fill-rule="evenodd" class="s2" d="m94.1 217.8h0.1v-23.7l-0.1 0.1-25.3-6.9-1.6-18.1h-12.3-10.5l3.2 35.7z"/>
+			<path id="path2999" class="s3" d="m46.2 1.1h27.5v11.5h-16v11.5h16v11.5h-27.5z"/>
+			<path id="path3001" class="s3" d="m79.2 1.1h27.5v10h-16v2h16v23h-27.5v-10.5h16v-2h-16z"/>
+			<path id="path3003" class="s3" d="m112.2 1.1h27.5v10h-16v2h16v23h-27.5v-10.5h16v-2h-16z"/>
+			<path id="polygon3005" fill-rule="evenodd" class="s4" d="m151 89.2h-56.9v22.7h32l-2.1 23.3h-29.9v22.7h28l-2.7 29.4-25.3 6.9v23.6l46.6-12.9 0.3-3.9 5.3-59.7 0.6-6.1z"/>
+		</g>
+	</g>
+</svg>

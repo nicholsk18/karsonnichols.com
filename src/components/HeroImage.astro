@@ -1,0 +1,34 @@
+---
+const { title, description } = Astro.props;
+
+import Container from "./ui/Container.astro";
+import Link from "./ui/Link.astro";
+import Title from "./ui/Title.astro";
+---
+
+<section
+  class="bg-blue-hero"
+  style="clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 90%,
+    50% 100%,
+    0 90%
+  );"
+>
+  <Container>
+    <div class="flex flex-col md:flex-row py-14 gap-20">
+      <div
+        class="flex-1 flex flex-col gap-8 max-w-[950px] mx-auto text-center items-center"
+      >
+        <Title tag="h1" variant="h1">
+          {title}
+        </Title>
+        <p class="text-xl max-w-[750px]">
+          {description}
+        </p>
+        <Link to="/contact" variant="filled">Start Now</Link>
+      </div>
+    </div>
+  </Container>
+</section>
