@@ -51,11 +51,11 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 
 	$content = "New message from $first_name $last_name\n\n";
 	$content .= "phone: $phone_number";
-	$content .= "subject: $phone_number";
+	$content .= "subject: $subject";
 	$content .= "$email: $phone_number\n\n";
 	$content .= "message: \n $message\n\n";
 
-	mail('kenichols2@yahoo.com', $email, $subject, $content);
+	mail('kenichols2@yahoo.com', 'kenichols2@yahoo.com', $subject, $content);
 	header("Location: $BASE_URL/thank-you");
 	exit;
 }

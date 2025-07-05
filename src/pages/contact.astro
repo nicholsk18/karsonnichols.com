@@ -114,6 +114,22 @@ import Container from "../components/ui/Container.astro";
 
         <div class="sm:col-span-2">
           <label
+            for="subject"
+            class="block text-sm/6 font-semibold text-gray-900">Subject</label
+          >
+          <div class="mt-2.5">
+            <input
+              type="text"
+              name="subject"
+              id="subject"
+              autocomplete="organization"
+              class="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+            />
+          </div>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label
             for="message"
             class="block text-sm/6 font-semibold text-gray-900">Message</label
           >
