@@ -53,9 +53,12 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 	$content .= "phone: $phone_number";
 	$content .= "subject: $subject";
 	$content .= "$email: $phone_number\n\n";
-	$content .= "message: \n $message\n\n";
+	$content .= "message: \n$message\n\n";
 
-	mail('kenichols2@gmail.com', $subject, $content);
+	mail($ENV['EMAIL_1'], $subject, $content);
+	mail($ENV['EMAIL_2'], $subject, $content);
+	mail($ENV['EMAIL_3'], $subject, $content);
+
 	header("Location: $BASE_URL/thank-you");
 	exit;
 }
