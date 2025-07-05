@@ -55,7 +55,7 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 	$content .= "$email: $phone_number\n\n";
 	$content .= "message: \n $message\n\n";
 
-	mail('kenichols2@yahoo.com', 'kenichols2@yahoo.com', $subject, $content);
+	mail('knichols@karsonnichols.com', $subject, $content);
 	header("Location: $BASE_URL/thank-you");
 	exit;
 }
