@@ -20,14 +20,14 @@ const currentPath = Astro.url.pathname;
       <div
         class="flex flex-row justify-between gap-x-10 gap-y-5 items-center flex-wrap"
       >
-        <NavLink to="/projects" active={currentPath === "/projects"}
+        <NavLink to="/projects/" active={currentPath === "/projects/"}
           >Projects</NavLink
         >
-        <NavLink to="/about" active={currentPath === "/about"}>About</NavLink>
+        <NavLink to="/about/" active={currentPath === "/about/"}>About</NavLink>
         <!--<NavLink to="/blog" active={currentPath === "/blog"}>Blog</NavLink>-->
 
         <Link
-          to="/contact"
+          to="/contact/"
           variant="outline"
           classList="w-full md:w-fit text-center">Contact</Link
         >
