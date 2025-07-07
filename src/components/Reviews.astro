@@ -7,9 +7,11 @@ import reviews from "../data/reviews.json";
 
 <div class="mt-10 md:mt-0">
   <div class="w-[100px] md:w-full">
-    <Image src={QuoteIcon} alt="" />
+    <Image src={QuoteIcon} alt="Quote Icon" loading="lazy" />
   </div>
-  <div class="relative bg-[#F2F2F290] w-full -top-10 md:-top-20 max-w-full md:max-w-[95%] ms-auto p-5 md:p-16">
+  <div
+    class="relative bg-[#F2F2F290] w-full -top-10 md:-top-20 max-w-full md:max-w-[95%] ms-auto p-5 md:p-16"
+  >
     <Image src={StarsIcon} alt="5 Stars" />
     <div
       x-data=`{
