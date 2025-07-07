@@ -26,8 +26,8 @@ const { frontmatter } = Astro.props;
 ---
 
 <Layout
-  title="Karson Nichols | Software Developer"
-  description="Software developer"
+  title=`${frontmatter.title} – Custom Web Development by Karson Nichols`
+  description=`Explore ${frontmatter.title}, project built by Karson Nichols, showcasing custom design, responsive layout, and modern web development tailored to client needs.`
 >
   <section class="bg-blue-hero">
     <Container>
@@ -93,7 +93,11 @@ const { frontmatter } = Astro.props;
         </div>
 
         <div>
-          <Link to="/contact" variant="filled" classList="py-3 mx-auto md:mx-0">
+          <Link
+            to="/contact/"
+            variant="filled"
+            classList="py-3 mx-auto md:mx-0"
+          >
             Start your project
           </Link>
         </div>
@@ -130,7 +134,7 @@ const { frontmatter } = Astro.props;
         </div>
 
         <div class="text-center mt-14">
-          <Link to="/projects" variant="filled" classList="py-3 mx-auto">
+          <Link to="/projects/" variant="filled" classList="py-3 mx-auto">
             Explore more projects
           </Link>
         </div>

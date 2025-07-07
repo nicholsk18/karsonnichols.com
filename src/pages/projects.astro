@@ -19,8 +19,8 @@ const projects = projectsList.sort(
 ---
 
 <Layout
-  title="Karson Nichols | Software Developer"
-  description="Software developer"
+  title="Projects | Karson Nichols – Web Developer & Problem Solver"
+  description="Explore recent web development projects by Karson Nichols, showcasing custom websites, applications, and solutions built for businesses and entrepreneurs."
 >
   <HeroImage
     title="Projects"
@@ -51,7 +51,7 @@ const projects = projectsList.sort(
             link={project.frontmatter.link}
             date={project.frontmatter.date}
             image={project.frontmatter.image}
-            url={project.url}
+            url=`${project.url}/`
           />
         ))
       }
