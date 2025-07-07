@@ -32,7 +32,7 @@ $responseKeys = json_decode($response,true);
 if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 	$first_name = htmlspecialchars(stripslashes(trim($_POST['first-name'])));
 	$last_name = htmlspecialchars(stripslashes(trim($_POST['last-name'])));
-	$phone_number = htmlspecialchars(stripslashes(trim($_POST['last-name'])));
+	$phone_number = htmlspecialchars(stripslashes(trim($_POST['phone-number'])));
 	$subject = htmlspecialchars(stripslashes(trim($_POST['subject'])));
 	$email = htmlspecialchars(stripslashes(trim($_POST['email'])));
 	$message = htmlspecialchars(stripslashes(trim($_POST['message'])));
