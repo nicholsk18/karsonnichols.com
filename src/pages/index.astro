@@ -34,7 +34,9 @@ const projects = Object.values(
     <Title tag="h2" variant="h2">Featured Projects</Title>
     <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 min-h-96"
+    >
       {
         projects.map((project: any) => {
           if (project.frontmatter.featured) {
