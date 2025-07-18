@@ -5,7 +5,7 @@ import type { ImageMetadata } from "astro";
 import Title from "./Title.astro";
 import Link from "./Link.astro";
 
-const { title, link, date, image, url } = Astro.props;
+const { title, link, linkText, date, image, url } = Astro.props;
 const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/assets/project/*.{jpeg,jpg,png,gif}",
 );
@@ -22,7 +22,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
       <Title tag="h3" variant="h3" classList="text-orange-base">
         {title}
       </Title>
-      <Link to={link} classList="text-md lowercase break-all">{link}</Link>
+      <Link to={link} classList="text-md lowercase break-all">{linkText}</Link>
       <Title tag="h4" variant="h4" classList="text-sm capitalize">
         {date}
       </Title>
