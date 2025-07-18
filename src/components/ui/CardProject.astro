@@ -12,28 +12,40 @@ const images = import.meta.glob<{ default: ImageMetadata }>(
 ---
 
 <div
-  class="flex flex-col border border-blue-base p-8 bg-white relative card gap-5 justify-between"
+  x-data="{ show: false }"
+  x-cloak
+  x-intersect.once="show = true"
+  x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+  class="transition-all duration-[1500ms] ease-out transform"
 >
-  <div>
-    <div class="border border-blue-base">
-      <Image src={images[image]()} alt={title} class="w-full" />
+  <div
+    class="flex flex-col border border-blue-base p-8 bg-white relative card gap-5 justify-between"
+  >
+    <div>
+      <div class="border border-blue-base">
+        <Image src={images[image]()} alt={title} class="w-full" />
+      </div>
+      <div class="pt-4">
+        <Title tag="h3" variant="h3" classList="text-orange-base">
+          {title}
+        </Title>
+        <Link to={link} classList="text-md lowercase break-all">{linkText}</Link
+        >
+        <Title tag="h4" variant="h4" classList="text-sm capitalize">
+          {date}
+        </Title>
+      </div>
     </div>
-    <div class="pt-4">
-      <Title tag="h3" variant="h3" classList="text-orange-base">
-        {title}
-      </Title>
-      <Link to={link} classList="text-md lowercase break-all">{linkText}</Link>
-      <Title tag="h4" variant="h4" classList="text-sm capitalize">
-        {date}
-      </Title>
+    <div>
+      <Link to={url} variant="outline">Project details</Link>
     </div>
-  </div>
-  <div>
-    <Link to={url} variant="outline">Project details</Link>
   </div>
 </div>
 
 <style>
+  [x-cloak] {
+    display: none !important;
+  }
   .card:after {
     content: "";
     z-index: -1;
