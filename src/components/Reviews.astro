@@ -1,43 +1,152 @@
 ---
-import QuoteIcon from "../assets/icons/quote.svg";
-import StarsIcon from "../assets/icons/stars.svg";
-import { Image } from "astro:assets";
 import reviews from "../data/reviews.json";
 ---
 
-<div class="mt-10 md:mt-0">
-  <div class="w-[100px] md:w-full">
-    <Image src={QuoteIcon} alt="Quote Icon" loading="lazy" />
-  </div>
-  <div
-    class="relative bg-[#F2F2F290] w-full -top-10 md:-top-20 max-w-full md:max-w-[95%] ms-auto p-5 md:p-16"
-  >
-    <Image src={StarsIcon} alt="5 Stars" />
-    <div
-      x-data=`{
+<div
+  class="mt-10 md:mt-0"
+  x-data=`{
     slides: ${JSON.stringify(reviews)},
-    currentSlideIndex: 1,
+    currentIndex: 0,
+    get slidesPerView() {
+      return window.innerWidth >= 768 ? 2 : 1;
+    },
     previous() {
-      if (this.currentSlideIndex > 1) {
-        this.currentSlideIndex = this.currentSlideIndex - 1
+      if (this.currentIndex > 0) {
+        this.currentIndex = Math.max(0, this.currentIndex - this.slidesPerView)
       } else {
-        this.currentSlideIndex = this.slides.length
+        const remainder = this.slides.length % this.slidesPerView;
+        this.currentIndex = remainder === 0 
+          ? this.slides.length - this.slidesPerView 
+          : this.slides.length - remainder;
       }
+      this.$dispatch('review-changed');
     },
     next() {
-      if (this.currentSlideIndex < this.slides.length) {
-        this.currentSlideIndex = this.currentSlideIndex + 1
+      if (this.currentIndex + this.slidesPerView < this.slides.length) {
+        this.currentIndex = this.currentIndex + this.slidesPerView
       } else {
-        this.currentSlideIndex = 1
+        this.currentIndex = 0
       }
+      this.$dispatch('review-changed');
     }
   }`
-      class="relative w-full overflow-hidden"
+>
+  <div class="relative w-full">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 my-14 items-start min-h-[600px] md:min-h-[500px]"
     >
-      <!-- previous button -->
+      <template x-for="slideIndex in slidesPerView" :key="'card-' + slideIndex">
+        <div class="relative flex flex-col h-full">
+          <div
+            class="relative backdrop-blur-xl bg-white/80 border-2 border-white w-full p-8 md:p-10 flex-1 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 rounded-2xl"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              class="w-8 h-8 text-orange-base mb-3 flex-shrink-0"
+            >
+              <path
+                d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+                fill="currentColor"></path>
+            </svg>
+
+            <div
+              class="relative flex-1 overflow-y-auto overflow-x-hidden mb-6 scrollbar-hide review-content"
+              x-data="{ isScrollable: false, isAtTop: true }"
+              x-init="const checkScroll = () => { isScrollable = $el.scrollHeight > $el.clientHeight; isAtTop = $el.scrollTop < 1; }; checkScroll(); setTimeout(() => { checkScroll(); }, 750); $el.addEventListener('scroll', checkScroll); window.addEventListener('resize', checkScroll);"
+              x-on:review-changed.window="$el.scrollTop = 0; isScrollable = false; isAtTop = true; setTimeout(() => { isScrollable = $el.scrollHeight > $el.clientHeight; isAtTop = $el.scrollTop < 1; }, 750);"
+            >
+              <template x-for="(slide, idx) in slides" :key="'content-' + idx">
+                <div
+                  x-show="idx === currentIndex + slideIndex - 1"
+                  x-cloak
+                  x-transition:enter="transition-all duration-500 ease-out delay-150"
+                  x-transition:enter-start="opacity-0 translate-y-8"
+                  x-transition:enter-end="opacity-100 translate-y-0"
+                  x-transition:leave="transition-all duration-300 ease-in"
+                  x-transition:leave-start="opacity-100 translate-y-0"
+                  x-transition:leave-end="opacity-0 -translate-y-8"
+                  class="flex flex-col gap-6 justify-between h-full absolute inset-0"
+                >
+                  <p
+                    class="w-full text-pretty text-lg md:text-xl !leading-8 text-gray-700 flex-1"
+                    x-text="slide.review"
+                  >
+                  </p>
+                </div>
+              </template>
+
+              <div
+                x-show="isScrollable && isAtTop"
+                x-cloak
+                class="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+              >
+                <div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent"></div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 animate-bounce">
+                  <svg
+                    class="w-6 h-6 text-blue-base"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="flex items-end justify-between gap-6 flex-shrink-0 border-t-2 border-gray-100 pt-6 relative min-h-[60px]"
+            >
+              <template x-for="(slide, idx) in slides" :key="'meta-' + idx">
+                <div
+                  x-show="idx === currentIndex + slideIndex - 1"
+                  x-cloak
+                  x-transition:enter="transition-all duration-500 ease-out delay-150"
+                  x-transition:enter-start="opacity-0 translate-y-8"
+                  x-transition:enter-end="opacity-100 translate-y-0"
+                  x-transition:leave="transition-all duration-300 ease-in"
+                  x-transition:leave-start="opacity-100 translate-y-0"
+                  x-transition:leave-end="opacity-0 -translate-y-8"
+                  class="absolute inset-0 flex items-end justify-between gap-6"
+                >
+                  <div class="flex-1">
+                    <h3 class="text-xl md:text-2xl font-bold text-blue-base">
+                      <span x-text="slide.name"></span>
+                    </h3>
+                    <span x-text="slide.company" class="block text-sm text-gray-600 mt-1"></span>
+                  </div>
+
+                  <div class="flex gap-0.5 items-center flex-shrink-0">
+                    {
+                      [...Array(5)].map((_, i) => (
+                        <svg
+                          class="w-6 h-6 md:w-7 md:h-7 text-orange-base drop-shadow-sm transition-transform hover:scale-110"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                          style={`animation: starPop 0.4s ease-out ${i * 0.1 + 0.3}s backwards;`}
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))
+                    }
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <div class="flex justify-end gap-2">
       <button
         type="button"
-        class="absolute bottom-0 right-14 z-20 flex rounded-full items-center justify-center bg-surface/40 text-on-surface transition hover:bg-surface/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:outline-offset-0 dark:bg-surface-dark/40 dark:text-on-surface-dark dark:hover:bg-surface-dark/60 dark:focus-visible:outline-primary-dark"
+        class="flex rounded-xl items-center justify-center backdrop-blur-xl bg-white/80 border-2 border-white text-blue-base transition-all duration-300 hover:bg-blue-base hover:text-white hover:scale-105 shadow-lg hover:shadow-xl w-12 h-12 md:w-14 md:h-14"
         aria-label="previous slide"
         x-on:click="previous()"
       >
@@ -47,20 +156,17 @@ import reviews from "../data/reviews.json";
           stroke="currentColor"
           fill="none"
           stroke-width="3"
-          class="size-5 md:size-10 pr-0.5"
+          class="w-6 h-6"
           aria-hidden="true"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"
+          ></path>
         </svg>
       </button>
 
-      <!-- next button -->
       <button
         type="button"
-        class="absolute right-5 bottom-0 z-20 flex rounded-full items-center justify-center bg-surface/40 text-on-surface transition hover:bg-surface/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:outline-offset-0 dark:bg-surface-dark/40 dark:text-on-surface-dark dark:hover:bg-surface-dark/60 dark:focus-visible:outline-primary-dark"
+        class="flex rounded-xl items-center justify-center backdrop-blur-xl bg-white/80 border-2 border-white text-blue-base transition-all duration-300 hover:bg-blue-base hover:text-white hover:scale-105 shadow-lg hover:shadow-xl w-12 h-12 md:w-14 md:h-14"
         aria-label="next slide"
         x-on:click="next()"
       >
@@ -70,44 +176,41 @@ import reviews from "../data/reviews.json";
           stroke="currentColor"
           fill="none"
           stroke-width="3"
-          class="size-5 md:size-10 pl-0.5"
+          class="w-6 h-6"
           aria-hidden="true"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
         </svg>
       </button>
-
-      <!-- slides -->
-      <div class="relative h-[950px] md:h-[550px] lg:h-[350px] w-full mt-5">
-        <template x-for="(slide, index) in slides">
-          <div
-            x-cloak
-            x-show="currentSlideIndex == index + 1"
-            class="absolute inset-0"
-            x-transition.opacity.duration.750ms
-          >
-            <!-- name and review -->
-            <div class="z-10 flex flex-col gap-4 justify-between h-full">
-              <p
-                class="w-full text-pretty text-lg md:text-2xl !leading-9 text-on-surface-dark"
-                x-text="slide.review"
-                x-bind:id="'slide' + (index + 1) + 'Review'"
-              >
-              </p>
-              <h3
-                class="w-full text-balance text-2xl lg:text-3xl font-bold text-on-surface-dark-strong"
-                x-bind:aria-describedby="'slide' + (index + 1) + 'Review'"
-              >
-                <span x-text="slide.name"></span>
-                <span x-text="slide.company" class="block text-sm"></span>
-              </h3>
-            </div>
-          </div>
-        </template>
-      </div>
     </div>
   </div>
 </div>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  @keyframes starPop {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+</style>

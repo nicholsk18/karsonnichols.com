@@ -1,0 +1,391 @@
+---
+title: "Building a Custom Design Tool with React and Laravel"
+description: "Learn how I built a powerful web-based design editor for Design n Print using React for the frontend and Laravel for the backend. Discover the challenges, solutions, and lessons learned from creating a production-ready design tool."
+publishDate: 2025-10-18
+author: "Karson Nichols"
+image: "/src/assets/blog/building-custom-design-tool-react-laravel.webp"
+tags: ["react", "laravel", "web development", "case study", "full-stack"]
+featured: true
+draft: false
+---
+
+## The Challenge
+
+When Design n Print approached me to build a custom web-based design editor, they had a clear vision: customers needed to create personalized, print-ready designs through an intuitive interface without any design software experience. The challenge was creating a tool that was both powerful enough for complex designs and simple enough for anyone to use.
+
+## The Tech Stack Decision
+
+After evaluating various options, I chose **TypeScript with React** for the frontend and **Laravel** for the backend. Here's why:
+
+### TypeScript + React for the Frontend
+
+TypeScript with React provided type safety and powerful tooling for building an interactive design editor:
+
+- **Type Safety**: TypeScript caught errors at compile-time, preventing runtime issues in complex canvas operations
+- **Real-time Updates**: React's virtual DOM enables instant visual feedback as users edit
+- **Modern Tooling**: Vite for blazing-fast dev server and optimized builds
+- **State Management**: Zustand for lightweight, type-safe state management
+- **Canvas Power**: Fabric.js for advanced canvas manipulation with full TypeScript support
+
+### Laravel for the Backend
+
+Laravel provided the robust backend infrastructure needed:
+
+- **API Development**: Clean RESTful API for frontend-backend communication
+- **Authentication & Security**: Built-in security features for user accounts and designs
+- **Caching System**: Laravel's cache layer solved critical rate-limiting issues (more on this later)
+- **Database Management**: Eloquent ORM for storing designs, orders, and user data
+
+## Key Features Implemented
+
+### 1. Interactive Design Canvas with Fabric.js
+
+The heart of the application is the design canvas built with **Fabric.js**, providing powerful canvas manipulation capabilities. Here's how I initialized the canvas with Zustand state management:
+
+```typescript
+// Canvas store with Zustand - managing canvas state
+export const useCanvasStore = create<State & Action>((set) => ({
+  canvas: null,
+  currentSideCard: "front",
+  activeObject: null,
+  frontCanvas: null,
+  backCanvas: null,
+
+  setCanvas: () =>
+    set((state) => {
+      initFabricExtra(fabric);
+
+      const canvas = new fabric.Canvas("design-area", {
+        preserveObjectStacking: true,
+        width: 639,
+        height: 376.5,
+        backgroundColor: "#fff",
+      });
+
+      state.canvas = canvas;
+
+      // Track active object for editing
+      canvas.on("selection:cleared", () => HandleElement(state));
+      canvas.on("selection:created", () => HandleElement(state));
+      canvas.on("selection:updated", () => HandleElement(state));
+
+      // Handle font size scaling on resize
+      canvas.on("object:modified", function (event) {
+        const target = event.target;
+        if (target && target.get("type") === "i-text") {
+          target.fontSize *= target.scaleX;
+          target.fontSize = parseInt(target.fontSize.toFixed(0));
+          target.scaleX = 1;
+          target.scaleY = 1;
+
+          if (target.fontSize > MAX_FONT_SIZE) {
+            target.fontSize = MAX_FONT_SIZE;
+          } else if (target.fontSize < MIN_FONT_SIZE) {
+            target.fontSize = MIN_FONT_SIZE;
+          }
+        }
+      });
+
+      return state;
+    }),
+}));
+```
+
+Each design element is draggable, resizable, and fully customizable in real-time. Users can add text, images, shapes, and SVG graphics to create their designs.
+
+### 2. PDF Generation with jsPDF
+
+One of the most critical features was generating high-quality, print-ready PDFs for purchase. I used **jsPDF** to convert canvas designs into downloadable PDFs. Here's the implementation:
+
+```typescript
+function ButtonDownload() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  function saveImage() {
+    const { canvas } = useCanvasStore.getState();
+    if (!canvas) return;
+    setIsLoading(true);
+
+    const height = canvas.height || 1;
+    const width = canvas.width || 1;
+
+    // Initialize PDF with proper dimensions
+    const pdf = new jsPDF("p", "px", "a4");
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const ratio = 0.5;
+
+    const canvasWidth = width * ratio;
+    const canvasHeight = height * ratio;
+    const marginX = (pageWidth - canvasWidth) / 2;
+
+    // Get preview URLs for both front and back designs
+    getCanvasPreviewUrls().then(async (obj: any) => {
+      // Add front page
+      pdf.addImage(
+        obj.frontPageUrl,
+        "JPEG",
+        marginX,
+        0,
+        canvasWidth,
+        canvasHeight,
+      );
+
+      // Add back page
+      const pdfPage2 = pdf.addPage();
+      pdfPage2.addImage(
+        obj.backPageUrl,
+        "JPEG",
+        marginX,
+        0,
+        canvasWidth,
+        canvasHeight,
+      );
+
+      setIsLoading(false);
+      pdfPage2.save("preview.pdf");
+    });
+  }
+
+  return (
+    <>
+      {isLoading && <Loading fullPage={true} />}
+      <button onClick={() => saveImage()}>
+        <span>download</span>
+      </button>
+    </>
+  );
+}
+```
+
+The PDF generation converts the Fabric.js canvas to high-resolution images, maintaining design quality for professional printing. Users can download a preview PDF for free or purchase the final print-ready version through the Laravel backend.
+
+### 3. Undo/Redo System
+
+One of the most important features for any design tool is a robust undo/redo system. I implemented a custom history management system by extending Fabric.js's prototype:
+
+```typescript
+// Custom Fabric.js history implementation
+fabric.Canvas.prototype._historySaveAction = function (_e?: any) {
+  if (this.historyProcessing) return;
+  if (_e && !_e.action) return;
+
+  const state = useCanvasStore.getState();
+
+  if (state.currentSideCard === "front") {
+    const json = this.historyNextStateFront;
+    this.historyFrontUndo.push(json);
+    this.historyNextStateFront = this._historyNext();
+    this.fire("history:append", { json: json });
+    return;
+  }
+
+  const json = this.historyNextStateBack;
+  this.historyBackUndo.push(json);
+  this.historyNextStateBack = this._historyNext();
+  this.fire("history:append", { json: json });
+};
+
+fabric.Canvas.prototype.undo = function (callback: unknown) {
+  this.historyProcessing = true;
+  const state = useCanvasStore.getState();
+
+  if (state.currentSideCard === "front") {
+    const history = this.historyFrontUndo.pop();
+    if (history) {
+      this.historyFrontRedo.push(this._historyNext());
+      this.historyNextStateFront = history;
+      this._loadHistory(history, "history:undo", callback);
+    }
+  }
+  // Similar logic for back side...
+};
+```
+
+This system maintains separate history stacks for the front and back of the card design, allowing users to undo/redo changes on each side independently.
+
+## Challenges & Solutions
+
+### Challenge 1: Google Fonts API Rate Limiting
+
+**Problem**: The original library I used pulled fonts directly from Google Fonts API. Without API keys, it would quickly hit rate limits, breaking the font picker for users.
+
+**Solution**: I completely rewrote the font loading system to use a Laravel backend endpoint with caching:
+
+```typescript
+// Modified font list fetching to use custom endpoint
+const LIST_BASE_URL = "https://www.designsnprint.com/api/design-editor/fonts";
+
+export default async function getFontList(): Promise<Font[]> {
+  // Check localStorage cache first
+  const cached = localStorage.getItem("fontmanager-google-fonts");
+  if (cached) {
+    return JSON.parse(cached);
+  }
+
+  // Request from our Laravel backend instead of Google directly
+  const url = new URL(LIST_BASE_URL);
+  url.searchParams.append("sort", "popularity");
+  const response = await get(url.href);
+
+  const json = JSON.parse(response);
+  const fontsOriginal = json.items;
+
+  // Cache in localStorage for faster subsequent loads
+  localStorage.setItem("fontmanager-google-fonts", JSON.stringify(mappedFonts));
+
+  return mappedFonts;
+}
+```
+
+The Laravel backend caches font data for 24 hours using Laravel's cache system, completely eliminating rate limit issues while maintaining fast font loading. I also implemented `FontFaceObserver` to ensure fonts are fully loaded before applying them:
+
+```typescript
+export const setCanvasTextFont = (canvas: Canvas | null, font: string): void => {
+  if (!canvas) return;
+
+  const activeObject = canvas.getActiveObject();
+
+  const fontLoader = new FontFaceObserver(font);
+  fontLoader
+    .load()
+    .then(() => {
+      if (canvas) {
+        activeObject?.set("fontFamily", font);
+        canvas.renderAll();
+      }
+    })
+    .catch(function (e) {
+      console.log(e);
+    });
+};
+```
+
+### Challenge 2: Customizing React-Color Library
+
+**Problem**: The react-color library didn't match the client's design requirements and needed custom styling to fit seamlessly into the editor interface.
+
+**Solution**: I customized the react-color picker by overriding its default styles using SASS and wrapping it in a custom component that integrated with our design system. This involved:
+
+- Creating custom SASS files to override default picker styles
+- Building a wrapper component that handled color change events and synced with Fabric.js canvas
+- Implementing proper color format conversion for different design elements (fill, stroke, background)
+
+The customization ensured the color picker matched the client's branding while maintaining full functionality for text colors, shape fills, and background colors.
+
+### Challenge 3: Image and SVG Handling
+
+**Problem**: Users needed to upload both raster images and vector SVG files, each requiring different handling approaches.
+
+**Solution**: I implemented separate handlers for different file types:
+
+```typescript
+export const setCanvasImage = (canvas: Canvas | null, files: FileList, options: object): void => {
+  if (!canvas) return;
+
+  Array.from(files).forEach((file) => {
+    const parts = file.name.split(".");
+
+    if (parts[parts.length - 1] === "svg") {
+      // Handle SVG files with special loader
+      const url = URL.createObjectURL(file);
+      setCanvasSVGFromUrl(canvas, url);
+    } else {
+      // Handle raster images (JPG, PNG, etc.)
+      const reader = new FileReader();
+      reader.onload = function (event: ProgressEvent<FileReader>) {
+        const imgObj = new Image();
+        imgObj.src = event.target?.result?.toString() || "";
+
+        imgObj.onload = function () {
+          const image = new fabric.Image(imgObj);
+
+          // Auto-scale if image is too large
+          if (image.height && canvas.height && image.height > canvas.height) {
+            image.scaleToHeight(canvas.height - 100);
+          }
+          if (image.width && canvas.width && image.width > canvas.width) {
+            image.scaleToWidth(canvas.width - 100);
+          }
+
+          canvas.centerObject(image);
+          canvas.add(image);
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+};
+```
+
+## Performance Optimizations
+
+To ensure the editor remained fast and responsive:
+
+### Frontend Optimizations
+
+- **Vite Build Tool**: Lightning-fast HMR (Hot Module Replacement) during development and optimized production builds
+- **Object Caching**: Disabled Fabric.js object caching for real-time updates: `object.objectCaching = false`
+- **TypeScript**: Caught performance issues at compile-time with strict type checking
+- **Zustand**: Minimal re-renders with granular state updates
+- **LocalStorage Caching**: Cached font lists locally to avoid repeated API calls
+
+### Backend Optimizations
+
+- **Laravel Cache**: 24-hour caching for Google Fonts API responses
+- **API Response Time**: Optimized font delivery through caching layer
+- **Axios**: Efficient HTTP client for API communication
+
+## Results & Key Takeaways
+
+The application successfully enables users to:
+
+- Create custom designs with text, images, shapes, and SVG graphics
+- Preview designs in real-time with instant visual feedback
+- Download PDFs for preview or purchase print-ready versions
+- Edit both front and back sides of card designs with independent undo/redo
+- Load and use hundreds of Google Fonts without rate limiting
+
+### What I Learned
+
+- **TypeScript is Essential**: Type safety prevented countless runtime errors in complex canvas operations
+- **Custom Solutions**: Sometimes modifying third-party libraries (like the Google Fonts loader) is necessary to meet specific requirements
+- **State Management**: Zustand's simplicity made managing complex canvas state much easier than Redux
+- **Fabric.js Power**: Extending Fabric.js prototypes enabled powerful custom features like dual-sided history management
+- **Caching Strategy**: A simple Laravel caching layer solved major API rate limiting issues
+
+## Tech Stack Summary
+
+### Frontend
+
+- **TypeScript** - Type safety and better developer experience
+- **React 18** - UI library for building interactive components
+- **Vite** - Modern build tool with fast HMR
+- **Fabric.js** - Powerful HTML5 canvas library
+- **Zustand** - Lightweight state management
+- **jsPDF** - Client-side PDF generation
+- **React-Color** - Color picker (customized)
+- **FontFaceObserver** - Reliable font loading
+- **React Icons** - Icon library
+- **SASS** - CSS preprocessor for custom styling
+- **Axios** - HTTP client for API requests
+- **Prettier & ESLint** - Code formatting and linting
+
+### Backend
+
+- **Laravel** - PHP framework for API and caching
+- **Laravel Cache** - Caching layer for Google Fonts API
+
+### Development Tools
+
+- **TypeScript Compiler** - Type checking and compilation
+- **Vite Dev Server** - Fast development environment
+
+## Want to Build Something Similar?
+
+If you're looking to create a custom web application or need help with a complex React/Laravel project, I'd love to help. Whether it's a design tool, e-commerce platform, or custom business application, I specialize in building scalable, user-friendly solutions.
+
+Check out the [live Design n Print editor](https://www.designsnprint.com/editor/?design_id=4529) to see the application in action, or [get in touch](/contact/) to discuss your project.
+
+---
+
+_This project showcases how modern web technologies can create powerful, user-friendly tools that transform business operations. The combination of React's dynamic frontend capabilities with Laravel's robust backend infrastructure provides an excellent foundation for complex web applications._

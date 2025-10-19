@@ -1,7 +1,7 @@
 [
   {
     "name": "Benjamin C.",
-    "company":"VizworX Inc",
+    "company": "VizworX Inc",
     "review": "I had the pleasure of working with Karson on a WordPress and JavaScript project, and I couldn't be happier with the results. Karson was professional, responsive, and highly skilled. He delivered high-quality work on time and went above and beyond to ensure the project met all requirements. His expertise in both WordPress and JavaScript was evident throughout the process, and he was always open to feedback, implementing changes quickly and efficiently. I highly recommend Karson for any web development needs and will definitely work with him again in the future!"
   },
   {
@@ -12,7 +12,7 @@
   {
     "name": "Thomas M.",
     "company": "WS LLC",
-    "review": "A+ Karson looks out for your company like he's apart of it. He could have easily pulled us down an expensive rabbit hole, instead he guided us to a more affordable option that ended up simplifying several divisions. I won't use anyone else as he's earned our trust."
+    "review": "Karson looks out for your company like he's apart of it. He could have easily pulled us down an expensive rabbit hole, instead he guided us to a more affordable option that ended up simplifying several divisions. I won't use anyone else as he's earned our trust."
   },
   {
     "name": "Beamer W.",
@@ -36,7 +36,7 @@
   },
   {
     "name": "Robert D.",
-    "company": "",
+    "company": "Semiotexte",
     "review": "In less than a day, Karson added a site-wide customization to our Squarespace site, tailoring the code exactly to our specifications and in a way which required no laborious page-by-page editing on our part. He identified our issue and two potential workarounds almost immediately, ranking these in order of first- and second-best options, and even shared a video example of his custom code in action on our site so we could see exactly how it would work. After implementing his code (custom JavaScript), he kept in frequent contact over the next twenty-four hours while multiple people within our organization took time to test the site in various browsers, and he efficiently (i.e., within minutes) troubleshooted two small glitches we ran into along the way until the customization was working perfectly. I would work with Karson again, and would confidently recommend him to others!"
   },
   {
@@ -53,5 +53,10 @@
     "name": "Ronald J.",
     "company": "Honeywell",
     "review": "A web developer that a company can rely on completely - completed the work to schedule, asks the right questions and give excellent development advice. Strongly recommend Karson."
+  },
+  {
+    "name": "Tristen W.",
+    "company": "Excel Solutions",
+    "review": "Karson was great, knowledgeable, fast and easy to work with. Thank you so much!"
   }
 ]

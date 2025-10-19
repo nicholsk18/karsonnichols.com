@@ -4,7 +4,7 @@ const { to, active } = Astro.props;
 
 <a
   href={to}
-  class={`font-bold uppercase cursor-pointer flex-1 text-center text-blue-base hover:text-orange-base ${active ? "text-orange-base" : ""}`}
+  class={`font-bold uppercase cursor-pointer flex-1 text-center text-blue-base hover:text-orange-base transition-colors duration-300 ${active ? "text-orange-base" : ""}`}
 >
   <slot />
 </a>

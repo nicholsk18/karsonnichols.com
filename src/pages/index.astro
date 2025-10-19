@@ -5,7 +5,7 @@ import ReactIcon from "@/assets/react.svg";
 import LaravelIcon from "@/assets/laravel.svg";
 import MariadbIcon from "@/assets/mariadb.svg";
 import ShopifyIcon from "@/assets/shopify.svg";
-import Line from "@/assets/line.png";
+import Line from "@/assets/line.webp";
 
 import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/ui/Container.astro";
@@ -15,10 +15,11 @@ import CardProject from "@/components/ui/CardProject.astro";
 import Link from "@/components/ui/Link.astro";
 import Card from "@/components/ui/Card.astro";
 import Reviews from "@/components/Reviews.astro";
+import Connect from "@/components/Connect.astro";
+import { getCollection } from "astro:content";
 
-const projects = Object.values(
-  import.meta.glob("@/pages/projects/*.mdx", { eager: true }),
-);
+const allProjects = await getCollection("projects");
+const projects = allProjects.filter((project) => project.data.featured);
 ---
 
 <Layout
@@ -32,26 +33,22 @@ const projects = Object.values(
 
   <Container tag="section" classList="py-10 my-10">
     <Title tag="h2" variant="h2">Featured Projects</Title>
-    <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+    <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 min-h-96"
-    >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 min-h-96">
       {
-        projects.map((project: any) => {
-          if (project.frontmatter.featured) {
-            return (
-              <CardProject
-                title={project.frontmatter.title}
-                link={project.frontmatter.link}
-                linkText={project.frontmatter.linkText}
-                date={project.frontmatter.date}
-                image={project.frontmatter.image}
-                url={project.url}
-              />
-            );
-          }
-        })
+        projects.map((project) => (
+          <CardProject
+            title={project.data.title}
+            link={project.data.link}
+            linkText={project.data.linkText}
+            date={project.data.date}
+            image={project.data.image}
+            thumbnail={project.data.thumbnail}
+            url={`/projects/${project.data.slug}/`}
+            tools={project.data.tools}
+          />
+        ))
       }
     </div>
 
@@ -64,91 +61,140 @@ const projects = Object.values(
 
   <Container tag="section" classList="my-20">
     <Title tag="h2" variant="h2">Services</Title>
-    <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+    <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-10 my-10">
-      <Card>
-        <div class="flex items-center gap-5 mb-4">
-          <Image src={ReactIcon} alt="React Icon" />
-          <Title tag="h3" variant="h3">Frontend</Title>
-        </div>
+      <div
+        x-data="{ show: false }"
+        x-cloak
+        x-intersect.once="show = true"
+        x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+        class="transition-all duration-[1500ms] ease-out"
+      >
+        <Card>
+          <div class="flex items-center gap-5 mb-4">
+            <Image
+              src={ReactIcon}
+              alt="React framework icon for modern frontend web development"
+              loading="lazy"
+            />
+            <Title tag="h3" variant="h3">Frontend</Title>
+          </div>
 
-        <p>
-          The front end of a website is crucial. It’s what users interact with
-          when they visit your store or app. A well-structured and visually
-          appealing website not only enhances user experience but also improves
-          your site’s ranking on Google. With clean, modern HTML and CSS, we
-          ensure your website is easy to navigate, responsive, and optimized for
-          search engines.
-        </p>
-      </Card>
+          <p>
+            The front end of a website is crucial. It's what users interact with when they visit
+            your store or app. A well-structured and visually appealing website not only enhances
+            user experience but also improves your site's ranking on Google. With clean, modern HTML
+            and CSS, we ensure your website is easy to navigate, responsive, and optimized for
+            search engines.
+          </p>
+        </Card>
+      </div>
 
-      <Card>
-        <div class="flex items-center gap-5 mb-4">
-          <Image src={LaravelIcon} alt="React Icon" />
-          <Title tag="h3" variant="h3">Backend</Title>
-        </div>
+      <div
+        x-data="{ show: false }"
+        x-cloak
+        x-intersect.once="show = true"
+        x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+        class="transition-all duration-[1500ms] ease-out"
+      >
+        <Card>
+          <div class="flex items-center gap-5 mb-4">
+            <Image
+              src={LaravelIcon}
+              alt="Laravel PHP framework icon for backend web development"
+              loading="lazy"
+            />
+            <Title tag="h3" variant="h3">Backend</Title>
+          </div>
 
-        <p>
-          The backend of a website is the powerhouse that handles the logic,
-          data, and functionality that keep your store or app running smoothly.
-          A robust and efficient backend ensures seamless performance, enhances
-          security, and supports scalability. Using modern PHP, the Laravel
-          framework, and WordPress, we build reliable, high-performing systems
-          tailored to your needs. Whether it's a custom application or a
-          WordPress-powered site, we ensure your backend is easy to maintain and
-          optimized for growth.
-        </p>
-      </Card>
+          <p>
+            The backend of a website is the powerhouse that handles the logic, data, and
+            functionality that keep your store or app running smoothly. A robust and efficient
+            backend ensures seamless performance, enhances security, and supports scalability. Using
+            modern PHP, the Laravel framework, and WordPress, we build reliable, high-performing
+            systems tailored to your needs. Whether it's a custom application or a WordPress-powered
+            site, we ensure your backend is easy to maintain and optimized for growth.
+          </p>
+        </Card>
+      </div>
 
-      <Card>
-        <div class="flex items-center gap-5 mb-4">
-          <Image src={MariadbIcon} alt="React Icon" />
-          <Title tag="h3" variant="h3">Database</Title>
-        </div>
+      <div
+        x-data="{ show: false }"
+        x-cloak
+        x-intersect.once="show = true"
+        x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+        class="transition-all duration-[1500ms] ease-out"
+      >
+        <Card>
+          <div class="flex items-center gap-5 mb-4">
+            <Image
+              src={MariadbIcon}
+              alt="MariaDB database icon for efficient data management"
+              loading="lazy"
+            />
+            <Title tag="h3" variant="h3">Database</Title>
+          </div>
 
-        <p>
-          The database is the backbone of any website or application it stores,
-          organizes, and retrieves the data that powers your store or app. An
-          efficient and well-structured database ensures fast performance, data
-          integrity, and scalability. Using MariaDB, we design and optimize
-          databases that handle complex processes with ease, ensuring your data
-          is secure, accessible, and ready to support your growing business
-          needs.
-        </p>
-      </Card>
+          <p>
+            The database is the backbone of any website or application. It stores, organizes, and
+            retrieves the data that powers your store or app. An efficient and well-structured
+            database ensures fast performance, data integrity, and scalability. Using MariaDB, we
+            design and optimize databases that handle complex processes with ease, ensuring your
+            data is secure, accessible, and ready to support your growing business needs.
+          </p>
+        </Card>
+      </div>
 
-      <Card>
-        <div class="flex items-center gap-5 mb-4">
-          <Image src={ShopifyIcon} alt="React Icon" />
-          <Title tag="h3" variant="h3">page builders</Title>
-        </div>
+      <div
+        x-data="{ show: false }"
+        x-cloak
+        x-intersect.once="show = true"
+        x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+        class="transition-all duration-[1500ms] ease-out"
+      >
+        <Card>
+          <div class="flex items-center gap-5 mb-4">
+            <Image
+              src={ShopifyIcon}
+              alt="Shopify e-commerce platform icon for online store development"
+              loading="lazy"
+            />
+            <Title tag="h3" variant="h3">page builders</Title>
+          </div>
 
-        <p>
-          Page builders like Squarespace and Shopify are the foundation of
-          modern website creation, offering powerful tools to design, manage,
-          and scale your store or site with ease. With these platforms, we craft
-          visually stunning, responsive, and user-friendly websites that are
-          optimized for performance and SEO. Whether you're setting up a new
-          store or enhancing an existing site, we ensure a seamless experience
-          tailored to your business goals.
-        </p>
-      </Card>
+          <p>
+            Page builders like Squarespace and Shopify are the foundation of modern website
+            creation, offering powerful tools to design, manage, and scale your store or site with
+            ease. With these platforms, we craft visually stunning, responsive, and user-friendly
+            websites that are optimized for performance and SEO. Whether you're setting up a new
+            store or enhancing an existing site, we ensure a seamless experience tailored to your
+            business goals.
+          </p>
+        </Card>
+      </div>
     </div>
 
     <div class="text-center mt-14">
-      <Link to="/contact/" variant="filled" classList="py-3 mx-auto">
-        Get a quote now
-      </Link>
+      <Link to="/contact/" variant="filled" classList="py-3 mx-auto"> Get a quote now </Link>
     </div>
   </Container>
 
-  <section class="bg-blue-hero">
-    <Container classList="py-20">
+  <section class="relative py-4">
+    <div class="absolute inset-0 backdrop-blur-sm bg-blue-base/5"></div>
+    <Container classList="py-20 relative z-10">
       <Title tag="h2" variant="h2">Reviews</Title>
-      <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+      <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
       <Reviews />
     </Container>
   </section>
+
+  <Connect />
 </Layout>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>

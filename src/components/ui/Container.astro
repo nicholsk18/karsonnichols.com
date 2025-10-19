@@ -1,9 +1,9 @@
 ---
 import { cn } from "../../utils/helpers";
-const { tag = "div", classList = "" } = Astro.props;
+const { tag = "div", classList = "", ...rest } = Astro.props;
 const TagName = tag;
 ---
 
-<TagName class={cn("container mx-auto py-5 px-5 md:px-0", classList)}>
+<TagName class={cn("mx-4 md:mx-12 py-5", classList)} {...rest}>
   <slot />
 </TagName>

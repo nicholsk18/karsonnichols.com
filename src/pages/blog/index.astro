@@ -1,23 +1,102 @@
 ---
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
 import Layout from "../../layouts/Layout.astro";
 import Container from "../../components/ui/Container.astro";
 import Title from "../../components/ui/Title.astro";
+import CardBlog from "../../components/ui/CardBlog.astro";
+import Line from "@/assets/line.webp";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const allPosts = await getCollection("blog", ({ data }) => {
+  return !data.draft;
+});
+
+const sortedPosts = allPosts.sort((a, b) => {
+  return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+});
+
+const postsPerPage = 9;
+const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+const currentPage = 1;
+const paginatedPosts = sortedPosts.slice(0, postsPerPage);
+
+const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
+const displayTags = allTags.slice(0, 5);
 ---
 
 <Layout
-  title="Karson Nichols Techinical Blog | Software Developer"
-  description="Software developer"
+  title="Blog | Karson Nichols - Web Development Insights & Tutorials"
+  description="Explore articles, tutorials, and insights on web development, design, and building modern digital experiences. Learn from real-world projects and best practices."
 >
-  <section class="bg-blue-hero">
+  <section class="py-8 md:py-12">
     <Container>
-      <div class="flex flex-row text-center py-14 gap-20">
-        <div class="flex-1 flex flex-col gap-8">
-          <Title tag="h1" variant="h1"> Blog </Title>
-        </div>
+      <div class="max-w-4xl mx-auto text-center space-y-3">
+        <Title tag="h1" variant="h1" classList="!text-3xl md:!text-5xl"> Blog </Title>
+
+        <p class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+          Insights, tutorials, and thoughts on web development and design.
+        </p>
+
+        {
+          displayTags.length > 0 && (
+            <div class="flex flex-wrap gap-2 justify-center items-center pt-2">
+              {displayTags.map((tag) => (
+                <span class="px-3 py-1 bg-gray-100 rounded-full text-xs font-medium text-gray-700">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )
+        }
       </div>
     </Container>
   </section>
+
+  {
+    sortedPosts.length > 0 ? (
+      <Container tag="section" classList="py-0 pb-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          {paginatedPosts.map((post) => (
+            <CardBlog entry={post} url={`/blog/${post.id}/`} />
+          ))}
+        </div>
+
+        {totalPages > 1 && (
+          <div class="flex justify-center gap-2 mt-12">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <a
+                href={page === 1 ? "/blog/" : `/blog/page/${page}/`}
+                class={`px-4 py-2 rounded-lg transition-all ${
+                  page === currentPage
+                    ? "bg-blue-base text-white shadow-lg"
+                    : "backdrop-blur-xl bg-white/80 border border-white text-gray-700 hover:bg-blue-base/10"
+                }`}
+              >
+                {page}
+              </a>
+            ))}
+          </div>
+        )}
+      </Container>
+    ) : (
+      <Container tag="section" classList="py-10 my-10">
+        <div class="text-center space-y-4">
+          <Title tag="h2" variant="h2">
+            Coming Soon
+          </Title>
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            I'm working on some exciting content. Check back soon for articles, tutorials, and
+            insights on web development!
+          </p>
+        </div>
+      </Container>
+    )
+  }
 </Layout>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>

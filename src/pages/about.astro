@@ -3,137 +3,131 @@ import Layout from "@/layouts/Layout.astro";
 import Title from "../components/ui/Title.astro";
 import Container from "../components/ui/Container.astro";
 import { Image } from "astro:assets";
-import Line from "@/assets/line.png";
+import Line from "@/assets/line.webp";
 import Link from "../components/ui/Link.astro";
 import type { ImageMetadata } from "astro";
 import Reviews from "../components/Reviews.astro";
+import AboutHero from "../components/AboutHero.astro";
+import Connect from "../components/Connect.astro";
+import { getYearsOfExperience } from "../data/siteConfig";
 
-const toolImages = await Astro.glob(
-  "/src/assets/tools/*.{jpeg,jpg,png,svg,gif}",
-).then((files) => {
+const toolImages = await Astro.glob("/src/assets/tools/*.{jpeg,jpg,png,svg,gif}").then((files) => {
   return files.map((file) => file.default);
 });
 ---
 
 <Layout
   title="Learn more about Karson Nichols | Software Developer"
-  description="Karson Nichols is a dedicated full‑stack developer with over 5 years of experience building web applications using modern frontend frameworks, PHP/Laravel, WordPress, and database technologies. Based in Alabama, he offers affordable, scalable solutions tailored to small businesses and entrepreneurs."
+  description=`Karson Nichols is a dedicated full‑stack developer with over ${getYearsOfExperience()} years of experience building web applications using modern frontend frameworks, PHP/Laravel, WordPress, and database technologies. Based in Alabama, he offers affordable, scalable solutions tailored to small businesses and entrepreneurs.`
 >
-  <section class="bg-blue-hero">
-    <Container>
-      <div class="flex flex-row text-center py-14 gap-20">
-        <div class="flex-1 flex flex-col gap-8">
-          <Title tag="h1" variant="h1"> About </Title>
-        </div>
-      </div>
-    </Container>
-  </section>
+  <AboutHero />
 
   <Container tag="section" classList="py-10 my-10">
-    <Title tag="h2" variant="h2">Who am I</Title>
-    <Image
-      src={Line}
-      alt="Line seporator"
-      class="text-center mx-auto pt-2"
-      loading="eager"
-    />
+    <div>
+      <Title tag="h2" variant="h2">Who am I</Title>
+      <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
+    </div>
 
     <div class="flex flex-col md:flex-row gap-20 py-10">
       <div class="flex-1 flex flex-col gap-8">
-        <p>
-          I'm Karson, a software developer based in Alabama with over {
-            new Date().getFullYear() - new Date("2019-09-01").getFullYear()
-          } years of experience building web applications. My journey into freelancing,
-          particularly through platforms like Upwork, significantly broadened my
-          exposure to diverse tools and development setups, truly opening my horizons.
+        <p
+          class="transition-all duration-[1500ms] ease-out"
+          x-data="{ show: false }"
+          x-intersect.once="show = true"
+          x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+          x-cloak
+        >
+          I'm Karson, a software developer based in Alabama with over {getYearsOfExperience()} years
+          of experience building web applications. My journey into freelancing, particularly through
+          platforms like Upwork, significantly broadened my exposure to diverse tools and development
+          setups, truly opening my horizons.
         </p>
-        <p>
-          I thrive on solving complex technical challenges and specialize in
-          helping clients get their applications running smoothly again. As a
-          self-starter, I'm constantly honing my skills in modern web
-          technologies. My expertise spans across React and Laravel, enabling me
-          to build robust and scalable solutions. I'm highly proficient in PHP
-          and have also gained valuable experience working with Python and
-          Vue.js.
+        <p
+          class="transition-all duration-[1500ms] ease-out"
+          x-data="{ show: false }"
+          x-intersect.once="show = true"
+          x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+          x-cloak
+        >
+          I thrive on solving complex technical challenges and specialize in helping clients get
+          their applications running smoothly again. As a self-starter, I'm constantly honing my
+          skills in modern web technologies. My expertise spans across React and Laravel, enabling
+          me to build robust and scalable solutions. I'm highly proficient in PHP and have also
+          gained valuable experience working with Python and Vue.js.
         </p>
-        <p>
-          Whether you're looking to integrate a new feature into your existing
-          application or need a persistent bug squashed, feel free to send me a
-          message. I'd be more than happy to discuss your needs and help bring
-          your project to fruition.
+        <p
+          class="transition-all duration-[1500ms] ease-out"
+          x-data="{ show: false }"
+          x-intersect.once="show = true"
+          x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+          x-cloak
+        >
+          Whether you're looking to integrate a new feature into your existing application or need a
+          persistent bug squashed, feel free to send me a message. I'd be more than happy to discuss
+          your needs and help bring your project to fruition.
         </p>
 
-        <div class="mt-4">
-          <Link to="/contact/" variant="filled" classList="py-3">
-            Contact Me
-          </Link>
+        <div
+          class="mt-4 transition-all duration-[1500ms] ease-out"
+          x-data="{ show: false }"
+          x-intersect.once="show = true"
+          x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+          x-cloak
+        >
+          <Link to="/contact/" variant="filled" classList="py-3"> Contact Me </Link>
         </div>
       </div>
 
-      <div class="flex-1 flex flex-col gap-8">
-        <div
-          class="float-container relative overflow-hidden w-full h-full min-h-[450px]"
-        >
-          {
-            toolImages.map((src) => (
-              <Image
-                src={src}
-                alt="bootstrap"
-                class="floating-img absolute w-[75px] h-[75px] pointer-events-none select-none"
-              />
-            ))
-          }
+      <div class="flex-1 flex items-center">
+        <div class="w-full">
+          <div class="grid grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
+            {
+              toolImages.map((src, index) => (
+                <div
+                  class="tool-card opacity-0 translate-y-4"
+                  style={`animation-delay: ${index * 0.05}s;`}
+                  x-data="{ show: false }"
+                  x-intersect.once="show = true"
+                  x-bind:class="show && 'tool-card-visible'"
+                >
+                  <div class="group relative aspect-square flex items-center justify-center p-3 rounded-xl transition-all duration-300 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-base/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <Image
+                      src={src}
+                      alt="tech icon"
+                      class="w-full h-full object-contain relative z-10 grayscale-[30%] group-hover:grayscale-0 transition-all duration-300"
+                    />
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>
   </Container>
 
-  <section class="bg-blue-hero">
-    <Container classList="py-20">
+  <section class="relative py-4">
+    <div class="absolute inset-0 backdrop-blur-sm bg-blue-base/5"></div>
+    <Container classList="py-20 relative z-10">
       <Title tag="h2" variant="h2">Reviews</Title>
-      <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+      <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
       <Reviews />
     </Container>
   </section>
 
-  <script>
-    const images = document.querySelectorAll(".floating-img");
-    const container = document.querySelector(".float-container");
+  <Connect />
 
-    const containerWidth = container?.clientWidth ?? 0;
-    const containerHeight = container?.clientHeight ?? 0;
-
-    const floats = [];
-
-    images.forEach((img, index) => {
-      const float = {
-        el: img,
-        // x: Math.random() * (containerWidth - img.clientWidth),
-        // y: Math.random() * (containerHeight - img.clientHeight),
-        x: (containerWidth - img.clientWidth) / 2,
-        y: (containerHeight - img.clientHeight) / 2,
-        dx: (Math.random() - 0.5) * 1.5, // Horizontal speed
-        dy: (Math.random() - 0.5) * 1.5, // Vertical speed
-      };
-      floats.push(float);
-    });
-
-    function animate() {
-      floats.forEach((f) => {
-        f.x += f.dx;
-        f.y += f.dy;
-
-        // Bounce off edges
-        if (f.x <= 0 || f.x + f.el.clientWidth >= containerWidth) f.dx *= -1;
-        if (f.y <= 0 || f.y + f.el.clientHeight >= containerHeight) f.dy *= -1;
-
-        f.el.style.transform = `translate(${f.x}px, ${f.y}px)`;
-      });
-
-      requestAnimationFrame(animate);
+  <style>
+    [x-cloak] {
+      display: none !important;
     }
 
-    animate();
-  </script>
+    .tool-card-visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      transition: all 0.5s ease-out;
+    }
+  </style>
 </Layout>

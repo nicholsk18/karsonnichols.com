@@ -1,0 +1,19 @@
+---
+import Container from "./ui/Container.astro";
+import Title from "./ui/Title.astro";
+import { siteConfig } from "../data/siteConfig";
+---
+
+<section class="relative pt-6 md:pt-16 pb-10">
+  <Container>
+    <div class="max-w-3xl mx-auto text-center space-y-6">
+      <Title tag="h1" variant="h1" classList="!text-5xl md:!text-7xl !mb-0">
+        Let's work together
+      </Title>
+
+      <p class="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto">
+        Tell me about your project and I'll get back to you within {siteConfig.responseTime}.
+      </p>
+    </div>
+  </Container>
+</section>

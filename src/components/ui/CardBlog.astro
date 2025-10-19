@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Title from "./Title.astro";
+
+const { entry, url } = Astro.props;
+const { title, description, publishDate, author, image, tags } = entry.data;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/blog/*.{jpeg,jpg,png,gif,webp}"
+);
+
+const thumbnailImage = image ? await images[image]() : null;
+
+const formattedDate = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}).format(publishDate);
+
+const displayTags = tags.slice(0, 3);
+---
+
+<div
+  x-data="{ show: false }"
+  x-cloak
+  x-intersect.once="show = true"
+  x-bind:class="show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'"
+  class="transition-all duration-[1500ms] ease-out transform group h-full"
+>
+  <a
+    href={url}
+    class="backdrop-blur-xl bg-white/80 border-2 border-white rounded-2xl shadow-lg hover:shadow-xl transition-all overflow-hidden h-full flex flex-col"
+  >
+    {
+      thumbnailImage ? (
+        <div class="relative overflow-hidden border-b-2 border-gray-100">
+          <Image
+            src={thumbnailImage.default}
+            alt={`${title} - Blog post featured image`}
+            loading="lazy"
+            class="w-full h-64 object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6">
+            <span class="text-white font-semibold">Read Article</span>
+          </div>
+        </div>
+      ) : (
+        <div class="relative overflow-hidden border-b-2 border-gray-100 bg-gradient-to-br from-blue-base/10 to-orange-base/10">
+          <div class="w-full h-64 flex items-center justify-center">
+            <svg
+              class="w-20 h-20 text-blue-base/30"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6">
+            <span class="text-white font-semibold">Read Article</span>
+          </div>
+        </div>
+      )
+    }
+
+    <div class="p-6 space-y-3 flex-1 flex flex-col">
+      <div class="flex-1">
+        <Title
+          tag="h3"
+          variant="h3"
+          classList="text-blue-base group-hover:text-orange-base transition-colors !text-2xl !mb-3"
+        >
+          {title}
+        </Title>
+
+        <p class="text-gray-600 leading-relaxed line-clamp-3 mb-3">
+          {description}
+        </p>
+
+        <div class="flex items-center gap-2 text-sm text-gray-500">
+          <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+          <span class="text-gray-300">•</span>
+          <span>{author}</span>
+        </div>
+      </div>
+
+      {
+        displayTags.length > 0 && (
+          <div class="flex flex-wrap gap-1.5 pt-3">
+            {displayTags.map((tag: string) => (
+              <span class="px-2 py-0.5 bg-blue-base/10 text-blue-base rounded text-xs font-medium">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </a>
+</div>
+
+<style>
+  [x-cloak] {
+    display: none !important;
+  }
+</style>

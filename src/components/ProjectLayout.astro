@@ -1,8 +1,9 @@
 ---
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import { getCollection } from "astro:content";
 
-import Line from "@/assets/line.png";
+import Line from "@/assets/line.webp";
 
 import CardProject from "@/components/ui/CardProject.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -10,123 +11,242 @@ import Container from "@/components/ui/Container.astro";
 import Title from "@/components/ui/Title.astro";
 import Reviews from "@/components/Reviews.astro";
 import Link from "@/components/ui/Link.astro";
+import Connect from "@/components/Connect.astro";
 
 const images = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/project/*.{jpeg,jpg,png,gif}",
+  "/src/assets/project/*.{jpeg,jpg,png,gif,webp}"
 );
 const toolImages = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/assets/tools/*.{jpeg,jpg,png,svg,gif}",
+  "/src/assets/tools/*.{jpeg,jpg,png,svg,gif,webp}"
 );
 
-const projects = Object.values(
-  import.meta.glob("@/pages/projects/*.mdx", { eager: true }),
-);
+const projectsCollection = await getCollection("projects");
 
-const { frontmatter } = Astro.props;
+const { entry } = Astro.props;
+const frontmatter = entry.data;
+
+// Resolve main image
+const mainImageData = await images[frontmatter.image]();
+
+// Resolve gallery images
+const galleryImages = await Promise.all(
+  frontmatter.images.map(async (img: { src: string; alt: string }) => {
+    const imgData = await images[img.src]();
+    return {
+      ...img,
+      data: imgData.default,
+    };
+  })
+);
 ---
 
 <Layout
   title=`${frontmatter.title} – Custom Web Development by Karson Nichols`
   description=`Explore ${frontmatter.title}, project built by Karson Nichols, showcasing custom design, responsive layout, and modern web development tailored to client needs.`
 >
-  <section class="bg-blue-hero">
+  <section class="relative py-6 md:py-12">
     <Container>
-      <div class="flex flex-row text-center py-14 gap-20">
-        <div class="flex-1 flex flex-col gap-8">
-          <Title tag="h1" variant="h1">
-            {frontmatter.title}
-          </Title>
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <div class="space-y-8 order-1" id="hero-left-content">
+          <div>
+            <Title tag="h1" variant="h1" classList="!text-4xl md:!text-7xl !mb-2">
+              {frontmatter.title}
+            </Title>
+            <div class="flex items-center gap-2 mb-4">
+              <div class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="text-sm text-gray-500">Completed {frontmatter.date}</span>
+            </div>
+            <p
+              class="text-xl md:text-2xl text-gray-600 leading-relaxed"
+              set:html={frontmatter.details}
+            />
+          </div>
         </div>
+
+        <div class="order-2 space-y-6" id="hero-right-column">
+          <a href={frontmatter.link} target="_blank" rel="noopener noreferrer" class="block group">
+            <div
+              class="relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all max-h-[500px]"
+              id="hero-image-wrapper"
+            >
+              <Image
+                src={mainImageData.default}
+                alt={frontmatter.title}
+                class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                loading="eager"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-8"
+              >
+                <div class="flex items-center gap-2 text-white">
+                  <span class="text-lg font-semibold">View Live Site</span>
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <div
+            class="backdrop-blur-xl bg-gradient-to-br from-blue-base/5 to-orange-base/5 border-2 border-white rounded-2xl px-4 py-3 shadow-lg"
+            id="hero-tech-stack"
+          >
+            <div class="flex items-center gap-1 mb-2">
+              <svg
+                class="w-5 h-5 text-orange-base"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                ></path>
+              </svg>
+              <p class="text-xs font-bold text-gray-700 uppercase tracking-wider">Tech Stack</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {
+                frontmatter.tools.map((tool: any) => (
+                  <span class="px-2.5 py-1 bg-blue-base text-white rounded-md text-xs font-semibold shadow-sm hover:scale-105 transition-transform">
+                    {tool.name}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 justify-center mt-12 max-w-xl mx-auto">
+        <Link to="/contact/" variant="filled" classList="w-full md:flex-1 text-center"
+          >Start a Project</Link
+        >
+        <Link to="/projects/" variant="outline" classList="w-full md:flex-1 text-center"
+          >See More Projects</Link
+        >
       </div>
     </Container>
   </section>
 
-  <Container tag="section" classList="my-20">
-    <div class="flex flex-col md:flex-row gap-10">
-      <div class="flex-1 order-2 md:order-1">
-        <div>
-          <Image
-            src={images[frontmatter.image]()}
-            alt={frontmatter.title}
-            class="w-full"
-            loading="eager"
-          />
-        </div>
-        <div
-          class="grid grid-cols-4 gap-5 mt-5 max-h-[75px] lg:max-h-[100px] xl:max-h-[150px] overflow-hidden"
-        >
-          {
-            frontmatter.images.map((img: { src: string; alt: string }) => (
-              <div>
-                <Image src={images[img.src]()} alt={img.alt} class="w-full" />
-              </div>
-            ))
-          }
-        </div>
-      </div>
-      <div class="flex-1 flex flex-col gap-10 order-1 md:order-2">
-        <div>
-          <Title tag="h2" variant="h3" classList="pb-2">Project details</Title>
-          <p set:html={frontmatter.details} />
-        </div>
+  {
+    frontmatter?.features && frontmatter.features.length > 0 && (
+      <section class="relative py-20">
+        <div class="absolute inset-0 backdrop-blur-sm bg-gradient-to-br from-blue-base/5 to-orange-base/10" />
+        <Container classList="relative z-10">
+          <Title tag="h2" variant="h2">
+            Key Features
+          </Title>
+          <Image src={Line} alt="Line separator" class="text-center mx-auto pt-2 mb-10" />
 
-        <div>
-          <Title tag="h2" variant="h3" classList="pb-2">Tools Used</Title>
-          <div class="flex flex-wrap gap-10 mt-3">
-            {
-              frontmatter.tools.map((tool: any) => (
-                <div class="flex justify-between flex-col gap-5">
-                  <div class="h-auto">
-                    <Image
-                      src={toolImages[tool.image]()}
-                      alt={tool.name}
-                      class="h-full mx-auto"
-                    />
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {frontmatter.features.map((feature: any) => (
+              <div class="backdrop-blur-xl bg-white/80 border-2 border-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-start gap-4">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-base to-blue-base/80 flex items-center justify-center shadow-md">
+                      <svg
+                        class="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d={feature.icon || "M5 13l4 4L19 7"}
+                        />
+                      </svg>
+                    </div>
                   </div>
-                  <Title tag="h3" variant="h5" classList="pb-2">
-                    {tool.name}
-                  </Title>
+                  <div class="flex-1">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">{feature.title}</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
+                  </div>
                 </div>
-              ))
-            }
+              </div>
+            ))}
           </div>
-        </div>
+        </Container>
+      </section>
+    )
+  }
 
-        <div>
-          <Link
-            to="/contact/"
-            variant="filled"
-            classList="py-3 mx-auto md:mx-0"
-          >
-            Start your project
-          </Link>
-        </div>
+  <Container tag="section" classList="my-0 py-20">
+    <Title tag="h2" variant="h2">Project Gallery</Title>
+    <Image src={Line} alt="Line separator" class="text-center mx-auto pt-2 mb-10" />
+
+    <div id="gallery" class="grid md:grid-cols-[2fr,1fr] gap-5">
+      <a
+        href={mainImageData.default.src}
+        data-pswp-width={mainImageData.default.width}
+        data-pswp-height={mainImageData.default.height}
+        target="_blank"
+        class="block max-h-[500px]"
+        id="main-gallery-image"
+      >
+        <Image
+          src={mainImageData.default}
+          alt={frontmatter.title}
+          class="w-full h-full cursor-pointer hover:opacity-90 transition-opacity object-cover object-top shadow-card rounded-lg"
+          loading="eager"
+        />
+      </a>
+      <div class="grid grid-cols-4 md:grid-cols-1 gap-5 content-start" id="gallery-images-column">
+        {
+          galleryImages.map((img) => (
+            <a
+              href={img.data.src}
+              data-pswp-width={img.data.width}
+              data-pswp-height={img.data.height}
+              target="_blank"
+              class="overflow-hidden rounded-lg md:max-h-[330px] block"
+            >
+              <Image
+                src={img.data}
+                alt={img.alt}
+                class="w-full h-full object-cover object-top cursor-pointer hover:opacity-75 transition-opacity"
+              />
+            </a>
+          ))
+        }
       </div>
     </div>
   </Container>
 
   {
     frontmatter?.related?.length > 0 && (
-      <Container tag="section" classList="my-20">
+      <Container tag="section" classList="my-0 py-20">
         <Title tag="h2" variant="h2">
           related Projects
         </Title>
-        <Image
-          src={Line}
-          alt="Line seporator"
-          class="text-center mx-auto pt-2"
-        />
+        <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10">
-          {projects.map((project: any) => {
-            if (frontmatter.related.includes(project.url)) {
+          {projectsCollection.map((project) => {
+            const relatedSlugs = frontmatter.related.map((url: string) =>
+              url.replace("/projects/", "").replace("/", "")
+            );
+            if (relatedSlugs.includes(project.data.slug)) {
               return (
                 <CardProject
-                  title={project.frontmatter.title}
-                  link={project.frontmatter.link}
-                  date={project.frontmatter.date}
-                  image={project.frontmatter.image}
-                  url={project.url}
+                  title={project.data.title}
+                  link={project.data.link}
+                  linkText={project.data.linkText}
+                  date={project.data.date}
+                  image={project.data.image}
+                  thumbnail={project.data.thumbnail}
+                  url={`/projects/${project.data.slug}/`}
+                  tools={project.data.tools}
                 />
               );
             }
@@ -142,12 +262,99 @@ const { frontmatter } = Astro.props;
     )
   }
 
-  <section class="bg-blue-hero">
-    <Container classList="py-20">
+  <section class="relative py-4">
+    <div class="absolute inset-0 backdrop-blur-sm bg-blue-base/5"></div>
+    <Container classList="py-20 relative z-10">
       <Title tag="h2" variant="h2">Reviews</Title>
-      <Image src={Line} alt="Line seporator" class="text-center mx-auto pt-2" />
+      <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
       <Reviews />
     </Container>
   </section>
+
+  <Connect />
 </Layout>
+
+<script>
+  import PhotoSwipeLightbox from "photoswipe/lightbox";
+  import "photoswipe/style.css";
+
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: "#gallery",
+    children: "a",
+    pswpModule: () => import("photoswipe"),
+    // UI options
+    zoom: true,
+    close: true,
+    counter: true,
+    arrowPrev: true,
+    arrowNext: true,
+    // Zoom settings
+    maxZoomLevel: 4,
+    // Padding
+    paddingFn: (viewportSize) => {
+      return {
+        top: 30,
+        bottom: 30,
+        left: 30,
+        right: 30,
+      };
+    },
+  });
+
+  lightbox.init();
+
+  // Dynamically set hero image max-height based on left content height minus tech stack
+  function setHeroHeight() {
+    const leftContent = document.getElementById("hero-left-content");
+    const imageWrapper = document.getElementById("hero-image-wrapper");
+    const techStack = document.getElementById("hero-tech-stack");
+
+    if (!leftContent || !imageWrapper || !techStack) return;
+
+    // Only apply on desktop (md breakpoint = 768px)
+    if (window.innerWidth >= 768) {
+      const leftHeight = leftContent.offsetHeight;
+      const techStackHeight = techStack.offsetHeight;
+      const gap = 24; // space-y-6 = 1.5rem = 24px
+      const imageMaxHeight = leftHeight - techStackHeight - gap;
+      imageWrapper.style.maxHeight = `${imageMaxHeight}px`;
+    } else {
+      // Reset to mobile max-height
+      imageWrapper.style.maxHeight = "500px";
+    }
+  }
+
+  // Dynamically set main image max-height based on gallery column height
+  function setGalleryHeight() {
+    const mainImage = document.getElementById("main-gallery-image");
+    const galleryColumn = document.getElementById("gallery-images-column");
+
+    if (!mainImage || !galleryColumn) return;
+
+    // Only apply on desktop (md breakpoint = 768px)
+    if (window.innerWidth >= 768) {
+      const columnHeight = galleryColumn.offsetHeight;
+      mainImage.style.maxHeight = `${columnHeight}px`;
+    } else {
+      // Reset to mobile max-height
+      mainImage.style.maxHeight = "500px";
+    }
+  }
+
+  // Wait for images to load
+  window.addEventListener("load", () => {
+    setHeroHeight();
+    setGalleryHeight();
+  });
+
+  // Recalculate on window resize
+  let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      setHeroHeight();
+      setGalleryHeight();
+    }, 100);
+  });
+</script>

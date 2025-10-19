@@ -1,4 +1,3 @@
-/** @type {import("prettier").Config} */
 export default {
   plugins: ["prettier-plugin-astro"],
   overrides: [
@@ -9,5 +8,10 @@ export default {
       },
     },
   ],
-  proseWrap: "never",
+  semi: true,
+  singleQuote: false,
+  tabWidth: 2,
+  trailingComma: "es5",
+  printWidth: 100,
+  useTabs: false,
 };

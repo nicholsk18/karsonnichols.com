@@ -3,13 +3,13 @@ import { defineConfig, passthroughImageService } from "astro/config";
 
 import tailwind from "@astrojs/tailwind";
 import alpine from "@astrojs/alpinejs";
-
 import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://karsonnichols.com",
-  integrations: [tailwind(), alpine({ entrypoint: "/src/entrypoint" }), mdx()],
+  integrations: [tailwind(), alpine({ entrypoint: "/src/entrypoint" }), mdx(), sitemap()],
   image: {
     service: passthroughImageService(),
   },
