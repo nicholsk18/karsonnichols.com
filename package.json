@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "optimize-images": "node scripts/optimize-images.js",
-    "update-image-refs": "node scripts/update-image-refs.js"
+    "update-image-refs": "node scripts/update-image-refs.js",
+    "deploy-build": "bash scripts/deploy-build.sh"
   },
   "dependencies": {
     "@alpinejs/intersect": "^3.14.9",

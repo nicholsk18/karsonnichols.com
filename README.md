@@ -22,6 +22,9 @@ pnpm optimize-images
 
 # Update image references to WebP
 pnpm update-image-refs
+
+# Deploy build (install, build, remove node_modules)
+pnpm deploy-build
 ```
 
 ## TODO
