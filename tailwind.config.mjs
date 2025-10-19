@@ -15,7 +15,7 @@ export default {
         card: "10px 10px 0px #FF3344",
       },
       boxShadow: {
-        card: "rgba(0, 0, 0, 0.1) 0px 4px 12px;",
+        card: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
       },
     },
   },
