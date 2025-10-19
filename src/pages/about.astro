@@ -11,9 +11,11 @@ import AboutHero from "../components/AboutHero.astro";
 import Connect from "../components/Connect.astro";
 import { getYearsOfExperience } from "../data/siteConfig";
 
-const toolImages = await Astro.glob("/src/assets/tools/*.{jpeg,jpg,png,svg,gif}").then((files) => {
-  return files.map((file) => file.default);
-});
+const toolImagesGlob = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/tools/*.{jpeg,jpg,png,svg,gif}",
+  { eager: true }
+);
+const toolImages = Object.values(toolImagesGlob).map((module) => module.default);
 ---
 
 <Layout
