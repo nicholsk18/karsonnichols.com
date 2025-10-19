@@ -1,34 +1,116 @@
 ---
-const { title, description } = Astro.props;
+const { title, description, projectsLink } = Astro.props;
 
 import Container from "./ui/Container.astro";
-import Link from "./ui/Link.astro";
 import Title from "./ui/Title.astro";
+import HeroStats from "./HeroStats.astro";
 ---
 
-<section
-  class="bg-blue-hero"
-  style="clip-path: polygon(
-    0 0,
-    100% 0,
-    100% 90%,
-    50% 100%,
-    0 90%
-  );"
->
+<section class="relative py-6 md:py-12">
   <Container>
-    <div class="flex flex-col md:flex-row py-14 gap-20">
-      <div
-        class="flex-1 flex flex-col gap-8 max-w-[950px] mx-auto text-center items-center"
-      >
-        <Title tag="h1" variant="h1">
-          {title}
-        </Title>
-        <p class="text-xl max-w-[750px]">
-          {description}
-        </p>
-        <Link to="/contact/" variant="filled">Start Now</Link>
+    <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+      <div class="flex flex-col gap-8 order-1 md:order-1">
+        <div>
+          <Title tag="h1" variant="h1" classList="!text-4xl md:!text-6xl !mb-4">
+            {title}
+          </Title>
+          <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
+            {description}
+          </p>
+        </div>
+
+        <HeroStats projectsLink={projectsLink} />
+      </div>
+
+      <div class="order-2 md:order-2">
+        <div class="relative aspect-square max-w-md mx-auto">
+          <div
+            class="absolute inset-0 backdrop-blur-xl bg-white/80 rounded-3xl border border-white shadow-2xl overflow-hidden animate-float"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-blue-base/20 via-purple-500/10 to-orange-base/20"
+            >
+            </div>
+            <div class="relative h-full flex items-center justify-center p-8">
+              <div class="text-center space-y-4">
+                <div
+                  class="w-24 h-24 mx-auto rounded-2xl bg-gradient-to-br from-orange-base to-orange-600 flex items-center justify-center shadow-xl"
+                >
+                  <svg
+                    class="w-12 h-12 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-3xl font-bold text-gray-800">Let's Build</div>
+                  <div class="text-lg text-gray-600">Something Amazing</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="absolute -top-4 -right-4 w-32 h-32 backdrop-blur-xl bg-orange-base/20 rounded-2xl border border-white shadow-xl animate-float-slow"
+          >
+          </div>
+          <div
+            class="absolute -bottom-4 -left-4 w-24 h-24 backdrop-blur-xl bg-blue-base/20 rounded-2xl border border-white shadow-xl animate-float-slower"
+          >
+          </div>
+        </div>
       </div>
     </div>
   </Container>
 </section>
+
+<style>
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(2deg);
+    }
+  }
+
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-15px) rotate(-3deg);
+    }
+  }
+
+  @keyframes float-slower {
+    0%,
+    100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-10px) rotate(5deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float-slow 8s ease-in-out infinite;
+  }
+
+  .animate-float-slower {
+    animation: float-slower 10s ease-in-out infinite;
+  }
+</style>

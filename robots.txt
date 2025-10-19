@@ -1,1 +1,4 @@
 User-agent: *
+Allow: /
+
+Sitemap: https://karsonnichols.com/sitemap-index.xml

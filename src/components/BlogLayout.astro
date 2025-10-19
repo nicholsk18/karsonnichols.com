@@ -1,0 +1,174 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/ui/Container.astro";
+import Title from "@/components/ui/Title.astro";
+import Link from "@/components/ui/Link.astro";
+import Connect from "@/components/Connect.astro";
+
+const { entry } = Astro.props;
+const { title, description, publishDate, author, image, tags } = entry.data;
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/blog/*.{jpeg,jpg,png,gif,webp}"
+);
+
+const heroImage = image ? await images[image]() : null;
+
+const formattedDate = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+}).format(publishDate);
+---
+
+<Layout title=`${title} | Karson Nichols` description={description} image={image} article={true}>
+  <article class="relative">
+    <section class="relative py-6 md:py-10">
+      <Container>
+        <div class="max-w-4xl mx-auto">
+          <a
+            href="/blog/"
+            class="inline-flex items-center gap-1.5 text-blue-base hover:text-orange-base transition-colors text-sm font-semibold mb-6"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Blog
+          </a>
+
+          <div class="space-y-4">
+            <div>
+              <Title tag="h1" variant="h1" classList="!text-3xl md:!text-5xl !mb-3">
+                {title}
+              </Title>
+
+              <div class="flex flex-wrap items-center gap-3 text-gray-600 text-sm md:text-base">
+                <div class="flex items-center gap-2">
+                  <svg
+                    class="w-5 h-5 text-orange-base"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    ></path>
+                  </svg>
+                  <span>{author}</span>
+                </div>
+                <span class="text-gray-300">•</span>
+                <div class="flex items-center gap-2">
+                  <svg
+                    class="w-5 h-5 text-blue-base"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    ></path>
+                  </svg>
+                  <time datetime={publishDate.toISOString()}>{formattedDate}</time>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-xl md:text-2xl text-gray-600 leading-relaxed">
+              {description}
+            </p>
+
+            {
+              tags.length > 0 && (
+                <div class="flex flex-wrap gap-2">
+                  {tags.map((tag: string) => (
+                    <span class="px-3 py-1 backdrop-blur-xl bg-white/80 border border-white rounded-full text-sm font-semibold text-gray-700 shadow-sm">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    {
+      heroImage && (
+        <section class="relative">
+          <Container>
+            <div class="max-w-4xl mx-auto">
+              <div class="relative overflow-hidden rounded-2xl shadow-xl">
+                <Image
+                  src={heroImage.default}
+                  alt={title}
+                  class="w-full h-auto object-cover"
+                  loading="eager"
+                />
+              </div>
+            </div>
+          </Container>
+        </section>
+      )
+    }
+
+    <section class="relative py-6 md:py-10">
+      <Container>
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="prose prose-lg md:prose-xl prose-blue max-w-none
+              prose-headings:font-bold prose-headings:text-gray-900
+              prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+              prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
+              prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6
+              prose-a:text-blue-base prose-a:font-semibold prose-a:no-underline hover:prose-a:text-orange-base prose-a:transition-colors
+              prose-strong:text-gray-900 prose-strong:font-bold
+              prose-code:text-orange-base prose-code:bg-orange-base/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:font-mono prose-code:text-sm prose-code:before:content-none prose-code:after:content-none
+              prose-pre:bg-gray-900 prose-pre:text-gray-100 prose-pre:rounded-xl prose-pre:p-6
+              prose-blockquote:border-l-4 prose-blockquote:border-blue-base prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-gray-600
+              prose-ul:list-disc prose-ul:pl-6 prose-ul:mb-6
+              prose-ol:list-decimal prose-ol:pl-6 prose-ol:mb-6
+              prose-li:text-gray-700 prose-li:mb-2
+              prose-img:rounded-xl prose-img:shadow-lg prose-img:my-8"
+          >
+            <slot />
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="relative py-6">
+      <Container>
+        <div class="max-w-4xl mx-auto">
+          <div
+            class="backdrop-blur-xl bg-gradient-to-br from-blue-base/5 to-orange-base/5 border-2 border-white rounded-2xl p-6 md:p-8 text-center space-y-4"
+          >
+            <Title tag="h3" variant="h3">Ready to Start Your Project?</Title>
+            <p class="text-gray-600 text-lg">
+              Let's work together to bring your ideas to life. Get in touch today.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+              <Link to="/contact/" variant="filled">Start a Project</Link>
+              <Link to="/projects/" variant="outline">View All Projects</Link>
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  </article>
+
+  <Connect />
+</Layout>

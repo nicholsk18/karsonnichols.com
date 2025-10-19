@@ -9,29 +9,154 @@ import Link from "./ui/Link.astro";
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="border-b-2 border-blue-base">
-  <Container>
-    <div class="flex flex-col md:flex-row justify-between items-center gap-5">
-      <div>
-        <a href="/">
-          <Image src={Logo} alt="Karson Nichols Logo" loading="eager" />
-        </a>
-      </div>
-      <div
-        class="flex flex-row justify-between gap-x-10 gap-y-5 items-center flex-wrap"
-      >
-        <NavLink to="/projects/" active={currentPath === "/projects/"}
-          >Projects</NavLink
-        >
-        <NavLink to="/about/" active={currentPath === "/about/"}>About</NavLink>
-        <!--<NavLink to="/blog" active={currentPath === "/blog"}>Blog</NavLink>-->
-
-        <Link
-          to="/contact/"
-          variant="outline"
-          classList="w-full md:w-fit text-center">Contact</Link
-        >
-      </div>
+<div class="sticky top-0 z-50 py-4">
+  <nav
+    class="backdrop-blur-xl bg-white/80 border border-white shadow-lg mx-4 md:mx-8 rounded-2xl overflow-hidden relative before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-base/10 before:via-orange-base/10 before:to-blue-base/10 before:animate-gradient-shift before:-z-10"
+  >
+    <div
+      class="absolute inset-0 bg-gradient-to-r from-transparent via-orange-base/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+    >
     </div>
-  </Container>
-</nav>
+    <Container classList="py-0">
+      <div class="flex flex-row justify-between items-center py-3">
+        <div>
+          <Link to="/" variant="unstyled">
+            <Image src={Logo} alt="Karson Nichols Logo" loading="eager" class="w-32 md:w-40" />
+          </Link>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex flex-row justify-between gap-x-8 items-center">
+          <NavLink to="/projects/" active={currentPath === "/projects/"}> Projects </NavLink>
+          <NavLink to="/blog/" active={currentPath === "/blog/"}>Blog</NavLink>
+          <NavLink to="/about/" active={currentPath === "/about/"}>About</NavLink>
+          <Link to="/contact/" variant="outline" classList="text-center">Contact</Link>
+        </div>
+
+        <!-- Mobile Hamburger Button -->
+        <button
+          id="mobile-menu-button"
+          class="md:hidden p-2 text-gray-700 hover:text-blue-base transition-colors"
+          aria-label="Toggle menu"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </Container>
+  </nav>
+</div>
+
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 opacity-0 invisible transition-all duration-300"
+>
+</div>
+
+<div
+  id="mobile-menu-drawer"
+  class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300"
+>
+  <div class="flex flex-col h-full">
+    <!-- Header -->
+    <div class="flex justify-between items-center p-6 border-b border-gray-200">
+      <Link to="/" variant="unstyled">
+        <Image src={Logo} alt="Karson Nichols Logo" loading="eager" class="w-32" />
+      </Link>
+      <button
+        id="mobile-menu-close"
+        class="p-2 text-gray-700 hover:text-blue-base transition-colors"
+        aria-label="Close menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="flex flex-col gap-4 p-6 flex-1 justify-center items-center">
+      <a
+        href="/projects/"
+        class={`font-bold uppercase cursor-pointer text-center text-blue-base hover:text-orange-base transition-colors duration-300 text-lg py-3 ${currentPath === "/projects/" ? "text-orange-base" : ""}`}
+      >
+        Projects
+      </a>
+      <a
+        href="/blog/"
+        class={`font-bold uppercase cursor-pointer text-center text-blue-base hover:text-orange-base transition-colors duration-300 text-lg py-3 ${currentPath === "/blog/" ? "text-orange-base" : ""}`}
+      >
+        Blog
+      </a>
+      <a
+        href="/about/"
+        class={`font-bold uppercase cursor-pointer text-center text-blue-base hover:text-orange-base transition-colors duration-300 text-lg py-3 ${currentPath === "/about/" ? "text-orange-base" : ""}`}
+      >
+        About
+      </a>
+      <Link to="/contact/" variant="filled" classList="text-center">Contact</Link>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes gradient-shift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient-shift {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+</style>
+
+<script>
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileMenuOverlay = document.getElementById("mobile-menu-overlay");
+  const mobileMenuDrawer = document.getElementById("mobile-menu-drawer");
+
+  function openMenu() {
+    if (mobileMenuOverlay && mobileMenuDrawer) {
+      mobileMenuOverlay.classList.remove("invisible", "opacity-0");
+      mobileMenuOverlay.classList.add("opacity-100");
+      mobileMenuDrawer.classList.remove("translate-x-full");
+      document.body.style.overflow = "hidden";
+    }
+  }
+
+  function closeMenu() {
+    if (mobileMenuOverlay && mobileMenuDrawer) {
+      mobileMenuOverlay.classList.add("opacity-0");
+      mobileMenuDrawer.classList.add("translate-x-full");
+      setTimeout(() => {
+        mobileMenuOverlay?.classList.add("invisible");
+      }, 300);
+      document.body.style.overflow = "";
+    }
+  }
+
+  mobileMenuButton?.addEventListener("click", openMenu);
+  mobileMenuClose?.addEventListener("click", closeMenu);
+  mobileMenuOverlay?.addEventListener("click", closeMenu);
+
+  // Close menu on navigation
+  document.querySelectorAll("#mobile-menu-drawer a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+</script>

@@ -6,15 +6,14 @@ import CardProject from "@/components/ui/CardProject.astro";
 import Container from "@/components/ui/Container.astro";
 
 import { Image } from "astro:assets";
-import Line from "@/assets/line.png";
+import Line from "@/assets/line.webp";
 import Reviews from "../components/Reviews.astro";
+import Connect from "../components/Connect.astro";
+import { getCollection } from "astro:content";
 
-const projectsList = Object.values(
-  import.meta.glob("@/pages/projects/*.mdx", { eager: true }),
-);
+const projectsList = await getCollection("projects");
 const projects = projectsList.sort(
-  (a: any, b: any) =>
-    new Date(b.frontmatter.order) - new Date(a.frontmatter.order),
+  (a, b) => new Date(b.data.order).getTime() - new Date(a.data.order).getTime()
 );
 ---
 
@@ -25,46 +24,75 @@ const projects = projectsList.sort(
   <HeroImage
     title="Projects"
     description="See for yourself how working with me can benifit your company, or get inspired for your next project."
+    projectsLink="#completed-projects"
   />
 
-  <Container tag="section" classList="py-10 my-10">
+  <Container tag="section" classList="py-10 my-10" id="completed-projects">
     <Title tag="h2" variant="h2">Completed Projects</Title>
-    <Image
-      src={Line}
-      alt="Line seporator"
-      class="text-center mx-auto pt-2"
-      loading="eager"
-    />
+    <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 min-h-96"
-    >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10 min-h-96">
       {
-        projects.map((project: any) => (
+        projects.map((project) => (
           <CardProject
-            title={project.frontmatter.title}
-            link={project.frontmatter.link}
-            linkText={project.frontmatter.linkText}
-            date={project.frontmatter.date}
-            image={project.frontmatter.image}
-            url=`${project.url}/`
+            title={project.data.title}
+            link={project.data.link}
+            linkText={project.data.linkText}
+            date={project.data.date}
+            image={project.data.image}
+            thumbnail={project.data.thumbnail}
+            url={`/projects/${project.data.slug}/`}
+            tools={project.data.tools}
           />
         ))
       }
     </div>
   </Container>
 
-  <section class="bg-blue-hero">
-    <Container classList="py-20">
+  <section class="relative py-4">
+    <div class="absolute inset-0 backdrop-blur-sm bg-blue-base/5"></div>
+    <Container classList="py-20 relative z-10">
       <Title tag="h2" variant="h2">Reviews</Title>
-      <Image
-        src={Line}
-        alt="Line seporator"
-        class="text-center mx-auto pt-2"
-        loading="lazy"
-      />
+      <Image src={Line} alt="" class="text-center mx-auto pt-2" loading="lazy" />
 
       <Reviews />
     </Container>
   </section>
+
+  <Connect />
 </Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const scrollToSection = (element: HTMLElement) => {
+      const offset = 100;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    };
+
+    if (window.location.hash === "#completed-projects") {
+      setTimeout(() => {
+        const element = document.getElementById("completed-projects");
+        if (element) {
+          scrollToSection(element);
+        }
+      }, 100);
+    }
+
+    const links = document.querySelectorAll('a[href="#completed-projects"]');
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const element = document.getElementById("completed-projects");
+        if (element) {
+          scrollToSection(element);
+        }
+      });
+    });
+  });
+</script>

@@ -1,10 +1,110 @@
 ---
-const { title, description } = Astro.props;
+const { title, description, image, article } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const siteURL = Astro.site?.href || "https://karsonnichols.com";
+
+const defaultImage = new URL("/favicon.svg", siteURL).href;
+const ogImage = image ? new URL(image, siteURL).href : defaultImage;
+
+const siteName = "Karson Nichols";
+const author = "Karson Nichols";
 ---
 
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
 <title>{title}</title>
 <meta name="description" content={description} />
+<meta name="author" content={author} />
 <link rel="canonical" href={canonicalURL.href} />
+
+<meta property="og:type" content={article ? "article" : "website"} />
+<meta property="og:url" content={canonicalURL.href} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content={siteName} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalURL.href} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<meta name="twitter:creator" content="@karsonnichols" />
+
+{
+  article && (
+    <>
+      <meta property="article:author" content={author} />
+      <meta property="og:type" content="article" />
+    </>
+  )
+}
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": article ? "BlogPosting" : "WebPage",
+    headline: title,
+    description: description,
+    url: canonicalURL.href,
+    author: {
+      "@type": "Person",
+      name: author,
+      url: siteURL,
+    },
+    ...(article && { "@type": "BlogPosting" }),
+    ...(!article && {
+      publisher: {
+        "@type": "Person",
+        name: siteName,
+        url: siteURL,
+      },
+    }),
+  })}
+/>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Karson Nichols",
+    url: siteURL,
+    jobTitle: "Full-Stack Web Developer",
+    description:
+      "Full-stack web developer specializing in React, Laravel, WordPress, and custom web applications. Based in Alabama, building modern, scalable solutions for businesses.",
+    knowsAbout: [
+      "Web Development",
+      "React",
+      "Laravel",
+      "WordPress",
+      "PHP",
+      "JavaScript",
+      "TypeScript",
+      "Full-Stack Development",
+    ],
+    sameAs: ["https://github.com/karsonnichols", "https://www.linkedin.com/in/karson-nichols"],
+  })}
+/>
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteName,
+    url: siteURL,
+    description:
+      "Professional web development services by Karson Nichols. Custom websites, web applications, and digital solutions.",
+    author: {
+      "@type": "Person",
+      name: author,
+    },
+  })}
+/>
