@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from "astro/config";
+import { defineConfig } from "astro/config";
 
 import tailwind from "@astrojs/tailwind";
 import alpine from "@astrojs/alpinejs";
@@ -10,7 +10,4 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://karsonnichols.com",
   integrations: [tailwind(), alpine({ entrypoint: "/src/entrypoint" }), mdx(), sitemap()],
-  image: {
-    service: passthroughImageService(),
-  },
 });

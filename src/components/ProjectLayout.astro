@@ -197,6 +197,8 @@ const galleryImages = await Promise.all(
         <Image
           src={mainImageData.default}
           alt={frontmatter.title}
+          width={800}
+          height={500}
           class="w-full h-full cursor-pointer hover:opacity-90 transition-opacity object-cover object-top shadow-card rounded-lg"
           loading="eager"
         />
@@ -214,6 +216,8 @@ const galleryImages = await Promise.all(
               <Image
                 src={img.data}
                 alt={img.alt}
+                width={400}
+                height={330}
                 class="w-full h-full object-cover object-top cursor-pointer hover:opacity-75 transition-opacity"
               />
             </a>
