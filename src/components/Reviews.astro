@@ -38,7 +38,7 @@ import reviews from "../data/reviews.json";
       <template x-for="slideIndex in slidesPerView" :key="'card-' + slideIndex">
         <div class="relative flex flex-col h-full">
           <div
-            class="relative backdrop-blur-xl bg-white/80 border-2 border-white w-full p-8 md:p-10 flex-1 flex flex-col shadow-xl hover:shadow-2xl transition-all duration-300 rounded-2xl"
+            class="relative bg-white/95 md:backdrop-blur-xl md:bg-white/80 border-2 border-white w-full p-8 md:p-10 flex-1 flex flex-col shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-2xl"
           >
             <svg
               viewBox="0 0 24 24"
@@ -60,12 +60,12 @@ import reviews from "../data/reviews.json";
                 <div
                   x-show="idx === currentIndex + slideIndex - 1"
                   x-cloak
-                  x-transition:enter="transition-all duration-500 ease-out delay-150"
-                  x-transition:enter-start="opacity-0 translate-y-8"
-                  x-transition:enter-end="opacity-100 translate-y-0"
-                  x-transition:leave="transition-all duration-300 ease-in"
-                  x-transition:leave-start="opacity-100 translate-y-0"
-                  x-transition:leave-end="opacity-0 -translate-y-8"
+                  x-transition:enter="transition-opacity duration-300 ease-out md:duration-500 md:delay-150"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="transition-opacity duration-200 ease-in md:duration-300"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0"
                   class="flex flex-col gap-6 justify-between h-full absolute inset-0"
                 >
                   <p
@@ -106,12 +106,12 @@ import reviews from "../data/reviews.json";
                 <div
                   x-show="idx === currentIndex + slideIndex - 1"
                   x-cloak
-                  x-transition:enter="transition-all duration-500 ease-out delay-150"
-                  x-transition:enter-start="opacity-0 translate-y-8"
-                  x-transition:enter-end="opacity-100 translate-y-0"
-                  x-transition:leave="transition-all duration-300 ease-in"
-                  x-transition:leave-start="opacity-100 translate-y-0"
-                  x-transition:leave-end="opacity-0 -translate-y-8"
+                  x-transition:enter="transition-opacity duration-300 ease-out md:duration-500 md:delay-150"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="transition-opacity duration-200 ease-in md:duration-300"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0"
                   class="absolute inset-0 flex items-end justify-between gap-6"
                 >
                   <div class="flex-1">
@@ -125,10 +125,10 @@ import reviews from "../data/reviews.json";
                     {
                       [...Array(5)].map((_, i) => (
                         <svg
-                          class="w-6 h-6 md:w-7 md:h-7 text-orange-base drop-shadow-sm transition-transform hover:scale-110"
+                          class="w-6 h-6 md:w-7 md:h-7 text-orange-base drop-shadow-sm"
                           fill="currentColor"
                           viewBox="0 0 20 20"
-                          style={`animation: starPop 0.4s ease-out ${i * 0.1 + 0.3}s backwards;`}
+                          style={`animation: starPop 0.3s ease-out ${i * 0.08 + 0.2}s backwards;`}
                         >
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
@@ -146,7 +146,7 @@ import reviews from "../data/reviews.json";
     <div class="flex justify-end gap-2">
       <button
         type="button"
-        class="flex rounded-xl items-center justify-center backdrop-blur-xl bg-white/80 border-2 border-white text-blue-base transition-all duration-300 hover:bg-blue-base hover:text-white hover:scale-105 shadow-lg hover:shadow-xl w-12 h-12 md:w-14 md:h-14"
+        class="flex rounded-xl items-center justify-center bg-white/95 md:backdrop-blur-xl md:bg-white/80 border-2 border-white text-blue-base transition-colors duration-300 md:hover:bg-blue-base md:hover:text-white md:hover:scale-105 shadow-lg md:hover:shadow-xl w-12 h-12 md:w-14 md:h-14 active:scale-95"
         aria-label="previous slide"
         x-on:click="previous()"
       >
@@ -166,7 +166,7 @@ import reviews from "../data/reviews.json";
 
       <button
         type="button"
-        class="flex rounded-xl items-center justify-center backdrop-blur-xl bg-white/80 border-2 border-white text-blue-base transition-all duration-300 hover:bg-blue-base hover:text-white hover:scale-105 shadow-lg hover:shadow-xl w-12 h-12 md:w-14 md:h-14"
+        class="flex rounded-xl items-center justify-center bg-white/95 md:backdrop-blur-xl md:bg-white/80 border-2 border-white text-blue-base transition-colors duration-300 md:hover:bg-blue-base md:hover:text-white md:hover:scale-105 shadow-lg md:hover:shadow-xl w-12 h-12 md:w-14 md:h-14 active:scale-95"
         aria-label="next slide"
         x-on:click="next()"
       >
@@ -200,16 +200,33 @@ import reviews from "../data/reviews.json";
     display: none;
   }
 
+  /* Performance optimizations */
+  .review-content,
+  .review-content > div {
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
   @keyframes starPop {
     0% {
-      transform: scale(0);
+      transform: scale(0) translateZ(0);
       opacity: 0;
     }
     50% {
-      transform: scale(1.2);
+      transform: scale(1.2) translateZ(0);
     }
     100% {
-      transform: scale(1);
+      transform: scale(1) translateZ(0);
+      opacity: 1;
+    }
+  }
+
+  /* Disable star animations on mobile for better performance */
+  @media (max-width: 767px) {
+    svg[style*="animation"] {
+      animation: none !important;
+      transform: scale(1) translateZ(0);
       opacity: 1;
     }
   }

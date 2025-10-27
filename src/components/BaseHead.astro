@@ -1,5 +1,5 @@
 ---
-const { title, description, image, article } = Astro.props;
+const { title, description, image, article, publishDate, modifiedDate } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const siteURL = Astro.site?.href || "https://karsonnichols.com";
@@ -47,26 +47,61 @@ const author = "Karson Nichols";
 
 <script
   type="application/ld+json"
-  set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": article ? "BlogPosting" : "WebPage",
-    headline: title,
-    description: description,
-    url: canonicalURL.href,
-    author: {
-      "@type": "Person",
-      name: author,
-      url: siteURL,
-    },
-    ...(article && { "@type": "BlogPosting" }),
-    ...(!article && {
-      publisher: {
-        "@type": "Person",
-        name: siteName,
-        url: siteURL,
-      },
-    }),
-  })}
+  set:html={JSON.stringify(
+    (() => {
+      if (article) {
+        const schema: any = {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: title,
+          description: description,
+          image: ogImage,
+          url: canonicalURL.href,
+          author: {
+            "@type": "Person",
+            name: author,
+            url: siteURL,
+          },
+          publisher: {
+            "@type": "Person",
+            name: siteName,
+            url: siteURL,
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": canonicalURL.href,
+          },
+        };
+
+        // Only add dates if they exist
+        if (publishDate) {
+          schema.datePublished = publishDate;
+          schema.dateModified = modifiedDate || publishDate;
+        }
+
+        return schema;
+      } else {
+        return {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          name: title,
+          description: description,
+          url: canonicalURL.href,
+          image: ogImage,
+          author: {
+            "@type": "Person",
+            name: author,
+            url: siteURL,
+          },
+          publisher: {
+            "@type": "Person",
+            name: siteName,
+            url: siteURL,
+          },
+        };
+      }
+    })()
+  )}
 />
 
 <script
@@ -76,6 +111,7 @@ const author = "Karson Nichols";
     "@type": "Person",
     name: "Karson Nichols",
     url: siteURL,
+    image: new URL("/karson-logo.webp", siteURL).href,
     jobTitle: "Full-Stack Web Developer",
     description:
       "Full-stack web developer specializing in React, Laravel, WordPress, and custom web applications. Based in Alabama, building modern, scalable solutions for businesses.",
@@ -88,8 +124,15 @@ const author = "Karson Nichols";
       "JavaScript",
       "TypeScript",
       "Full-Stack Development",
+      "E-commerce Development",
+      "Custom Web Applications",
     ],
     sameAs: ["https://github.com/karsonnichols", "https://www.linkedin.com/in/karson-nichols"],
+    address: {
+      "@type": "PostalAddress",
+      addressRegion: "Alabama",
+      addressCountry: "US",
+    },
   })}
 />
 
@@ -105,6 +148,13 @@ const author = "Karson Nichols";
     author: {
       "@type": "Person",
       name: author,
+      url: siteURL,
     },
+    publisher: {
+      "@type": "Person",
+      name: author,
+      url: siteURL,
+    },
+    inLanguage: "en-US",
   })}
 />

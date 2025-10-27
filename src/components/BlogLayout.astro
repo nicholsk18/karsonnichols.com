@@ -24,7 +24,13 @@ const formattedDate = new Intl.DateTimeFormat("en-US", {
 }).format(publishDate);
 ---
 
-<Layout title=`${title} | Karson Nichols` description={description} image={image} article={true}>
+<Layout
+  title=`${title} | Karson Nichols`
+  description={description}
+  image={image}
+  article={true}
+  publishDate={publishDate.toISOString()}
+>
   <article class="relative">
     <section class="relative py-6 md:py-10">
       <Container>
