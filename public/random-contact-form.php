@@ -34,6 +34,7 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 	$last_name = htmlspecialchars(stripslashes(trim($_POST['last-name'])));
 	$phone_number = htmlspecialchars(stripslashes(trim($_POST['phone-number'])));
 	$subject = htmlspecialchars(stripslashes(trim($_POST['subject'])));
+	$subject = preg_replace("/[\r\n]+/", " ", $subject);
 	$email = htmlspecialchars(stripslashes(trim($_POST['email'])));
 	$message = htmlspecialchars(stripslashes(trim($_POST['message'])));
 	if(!preg_match("/^[A-Za-z .'-]+$/", $first_name)){
@@ -49,13 +50,23 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 		$message_error = 'Your message should not be empty';
 	}
 
+	$from_email = $ENV['EMAIL_1'];
+	$fromName  = 'Website Contact';
+
+	$headers = [];
+	$headers[] = "From: Karson N <{$from_email}>";
+	$headers[] = "Reply-To: {$email}";
+	$headers[] = "MIME-Version: 1.0";
+	$headers[] = "Content-Type: text/plain; charset=UTF-8";
+	$headers[] = "X-Mailer: PHP/" . phpversion();
+
 	$content = "New message from $first_name $last_name\n\n";
 	$content .= "phone: $phone_number\n";
 	$content .= "subject: $subject\n";
 	$content .= "email: $email\n\n";
 	$content .= "message:\n$message\n\n";
 
-	mail($ENV['EMAIL_1'], $subject, $content);
+	mail($from_email, 'Site contact form', $content);
 //	mail($ENV['EMAIL_2'], $subject, $content);
 //	mail($ENV['EMAIL_3'], $subject, $content);
 
