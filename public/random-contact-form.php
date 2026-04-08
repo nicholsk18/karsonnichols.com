@@ -1,4 +1,10 @@
 <?php
+
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
+
+require '../vendor/autoload.php';
+
 $ENV = parse_ini_file('../.env');
 $BASE_URL = $ENV['BASE_URL'];
 
@@ -37,6 +43,7 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 	$subject = preg_replace("/[\r\n]+/", " ", $subject);
 	$email = htmlspecialchars(stripslashes(trim($_POST['email'])));
 	$message = htmlspecialchars(stripslashes(trim($_POST['message'])));
+
 	if(!preg_match("/^[A-Za-z .'-]+$/", $first_name)){
 		$name_error = 'Invalid name';
 	}
@@ -50,28 +57,42 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 		$message_error = 'Your message should not be empty';
 	}
 
-	$from_email = $ENV['EMAIL_1'];
-	$fromName  = 'Website Contact';
+	// Create PHPMailer instance
+	$mail = new PHPMailer(true);
 
-	$headers = [];
-	$headers[] = "From: Karson N <{$from_email}>";
-	$headers[] = "Reply-To: {$email}";
-	$headers[] = "MIME-Version: 1.0";
-	$headers[] = "Content-Type: text/plain; charset=UTF-8";
-	$headers[] = "X-Mailer: PHP/" . phpversion();
+	try {
+		// Server settings
+		$mail->isSMTP();
+		$mail->Host       = $ENV['SMTP_HOST'];
+		$mail->SMTPAuth   = true;
+		$mail->Username   = $ENV['SMTP_USERNAME'];
+		$mail->Password   = $ENV['SMTP_PASSWORD'];
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+		$mail->Port       = $ENV['SMTP_PORT'];
 
-	$content = "New message from $first_name $last_name\n\n";
-	$content .= "phone: $phone_number\n";
-	$content .= "subject: $subject\n";
-	$content .= "email: $email\n\n";
-	$content .= "message:\n$message\n\n";
+		// Recipients
+		$mail->setFrom($ENV['SMTP_FROM_EMAIL'], $ENV['SMTP_FROM_NAME']);
+//		$mail->addAddress($ENV['EMAIL_1']);
+		$mail->addReplyTo($email, "$first_name $last_name");
 
-	mail($from_email, 'Site contact form', $content);
-//	mail($ENV['EMAIL_2'], $subject, $content);
-//	mail($ENV['EMAIL_3'], $subject, $content);
+		// Content
+		$mail->isHTML(false);
+		$mail->Subject = 'Site contact form - ' . $subject;
+		$mail->Body    = "New message from $first_name $last_name\n\n";
+		$mail->Body   .= "phone: $phone_number\n";
+		$mail->Body   .= "subject: $subject\n";
+		$mail->Body   .= "email: $email\n\n";
+		$mail->Body   .= "message:\n$message\n\n";
 
-	header("Location: $BASE_URL/thank-you");
-	exit;
+		$mail->send();
+
+		header("Location: $BASE_URL/thank-you");
+		exit;
+	} catch (Exception $e) {
+		error_log("Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+		header("Location: $BASE_URL/contact?error=email");
+		exit;
+	}
 }
 
 header("Location: $BASE_URL/contact");
