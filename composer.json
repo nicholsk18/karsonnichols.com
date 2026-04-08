@@ -1,0 +1,17 @@
+{
+    "name": "knichols/public_html",
+    "autoload": {
+        "psr-4": {
+            "Knichols\\PublicHtml\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Karson Nichols",
+            "email": "nicholsk18@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^7.0"
+    }
+}

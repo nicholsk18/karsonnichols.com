@@ -72,7 +72,7 @@ if(!empty($_POST) && intval($responseKeys["success"]) === 1){
 
 		// Recipients
 		$mail->setFrom($ENV['SMTP_FROM_EMAIL'], $ENV['SMTP_FROM_NAME']);
-//		$mail->addAddress($ENV['EMAIL_1']);
+		$mail->addAddress($ENV['EMAIL_1']);
 		$mail->addReplyTo($email, "$first_name $last_name");
 
 		// Content
